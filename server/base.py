@@ -1,10 +1,9 @@
+import os
 import platform
 import sys
 import time
 
 import psutil
-
-from common.config import ServerConfig
 
 
 def start_server():
@@ -36,7 +35,6 @@ def print_intro() -> None:
 
     # Debug Platform Info
     _cpu_freq = psutil.cpu_freq().max or psutil.cpu_freq().current
-    server_config = ServerConfig()
 
     print('Computer                     :', platform.node())
     print('System                       :', platform.platform())
@@ -56,9 +54,9 @@ def print_intro() -> None:
     print('CPU Frequency                :', round(_cpu_freq / 1000, 2), 'GHz, ', round(_cpu_freq), 'MHz')
     print('Total Physical Memory        :', _sizeof_fmt(psutil.virtual_memory().total))
     print()
-    print('Host Address                 :', server_config.host)
-    print('Port Address                 :', server_config.port)
-    print('Worker Count                 :', server_config.worker_count)
+    print('Host Address                 :', SERVER_HOST)
+    print('Port Address                 :', SERVER_PORT)
+    print('Worker Count                 :', SERVER_WORKER_COUNT)
     print()
     print()
     print('Starting FastAPI server ...')
@@ -78,10 +76,9 @@ def _sizeof_fmt(num: float, suffix: str = "B") -> str:
 
 def auto_detect_worker_count() -> int:
     """Returns an optimum number of workers w.r.t., system configuration of the server."""
-    try:
-        import unix_server
+    if is_unix():
         return max(psutil.cpu_count(logical=False) * 2 + 1, 2)
-    except ImportError:
+    else:
         return 1  # Uvicorn has problem with multiple worker
 
 
@@ -91,3 +88,14 @@ def is_unix() -> bool:
         return True
     except ImportError:
         return False
+
+
+# // ---------------------------------------------------------------------------------------- server configurations
+
+# DO NOT CHANGE THESE VALUES AT RUNTIME
+
+SERVER_HOST = os.getenv('server.host') or '0.0.0.0'
+SERVER_PORT = os.getenv('server.port') or 8080
+SERVER_ROUTER = os.getenv('server.router')
+SERVER_WORKER_COUNT = os.getenv('server.worker.count') or auto_detect_worker_count()
+SERVER_WORKER_CLASS = os.getenv('server.worker.class')

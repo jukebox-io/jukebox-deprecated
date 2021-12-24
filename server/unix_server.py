@@ -1,16 +1,19 @@
 import gunicorn.app.base
 
-from common import ServerConfig
+from .base import (SERVER_ROUTER, SERVER_HOST, SERVER_PORT, SERVER_WORKER_COUNT, SERVER_WORKER_CLASS)
 
 
 def start_unix_server() -> None:
     """Uvicorn server Implementation for Unix based OS"""
-    config = ServerConfig()
-    options = {
-        'bind': '%s:%s' % (config.host, config.port),
-        'workers': config.worker_count,
-    }
-    _StandaloneApplication(config.router, options).run()
+    _StandaloneApplication(SERVER_ROUTER,
+                           options={
+                               'bind': '%s:%s' % (SERVER_HOST, SERVER_PORT),
+                               'workers': SERVER_WORKER_COUNT,
+                               'worker_class': SERVER_WORKER_CLASS,
+                               'preload_app': True,
+                               'print_config': True
+                           }) \
+        .run()
 
 
 # // ---------------------------------------------------------------------------------------- utility cls

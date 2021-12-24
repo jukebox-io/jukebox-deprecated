@@ -2,3 +2,4 @@ fastapi~=0.70.1
 uvicorn[standard]~=0.16.0
 gunicorn[extra]~=20.1.0
 psutil~=5.8.0
+python-dotenv~=0.19.2

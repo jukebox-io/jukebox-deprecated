@@ -1,13 +1,12 @@
 import uvicorn
 
-from common import ServerConfig
+from .base import (SERVER_ROUTER, SERVER_HOST, SERVER_PORT, SERVER_WORKER_COUNT)
 
 
 def start_non_unix_server() -> None:
     """Start Uvicorn server Implementation for Non-Unix based OS"""
-    config = ServerConfig()
-    uvicorn.run(app=config.router,
-                host=config.host,
-                port=config.port,
-                workers=config.worker_count,
+    uvicorn.run(app=SERVER_ROUTER,
+                host=SERVER_HOST,
+                port=int(SERVER_PORT),  # Expects integer value
+                workers=SERVER_WORKER_COUNT,
                 )

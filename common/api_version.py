@@ -1,6 +1,6 @@
-from enum import Enum
+import enum
 
 
-class ApiVersion(str, Enum):
+class ApiVersion(str, enum.Enum):
     """Enum representing API versions."""
     V1 = "v1"
