@@ -3,6 +3,9 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/client_app/android/app/src/main/java" />
+      <excludeFolder url="file://$MODULE_DIR$/client_app/test" />
+      <excludeFolder url="file://$MODULE_DIR$/client_app/.dart_tool" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.9 (ProjectX-music)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
