@@ -57,6 +57,9 @@ def print_intro() -> None:
     print('Host Address                 :', SERVER_HOST)
     print('Port Address                 :', SERVER_PORT)
     print('Worker Count                 :', SERVER_WORKER_COUNT)
+    if is_unix(): print('Worker Class                 :', SERVER_WORKER_CLASS)
+    print()
+    print('Server Home                  :', os.getenv('pxm.home'))
     print()
     print()
     print('Starting FastAPI server ...')
@@ -84,9 +87,10 @@ def auto_detect_worker_count() -> int:
 
 def is_unix() -> bool:
     try:
-        import unix_server
+        import gunicorn.app.base
         return True
     except ImportError:
+        # Can not load gunicorn
         return False
 
 

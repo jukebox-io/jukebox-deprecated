@@ -1,11 +1,12 @@
 import glob
 import os.path
+import pathlib
 import sys
 
 import dotenv
 
 if __name__ == '__main__':
-    pxm_home = os.path.dirname(__file__)
+    pxm_home = os.path.dirname(pathlib.Path(__file__).absolute())
     conf_file_path_regex = f'{pxm_home}/configurations/*.conf'
 
     # Load Configurations

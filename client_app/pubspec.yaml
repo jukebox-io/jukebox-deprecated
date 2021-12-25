@@ -2,7 +2,7 @@ name: pxm
 description: A Flutter Music Player.
 
 publish_to: 'none' # The following line prevents the package from being accidentally published.
-version: 1.0.0+16
+#version: 1.0.0+16
 
 environment:
   sdk: ">=2.13.0 <3.0.0"
