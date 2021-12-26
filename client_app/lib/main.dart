@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/foundation.dart' show kDebugMode;
+// import 'package:firebase_analytics/firebase_analytics.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+// import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -22,15 +22,15 @@ Future<void> main() async {
     () async {
       // Initialize Application
       WidgetsFlutterBinding.ensureInitialized();
-      await Firebase.initializeApp();
+      // await Firebase.initializeApp();
 
       // Force disable Crashlytics collection while doing every day development.
       // Temporarily toggle this to true if you want to test crash reporting in your app.
-      await FirebaseCrashlytics.instance
-          .setCrashlyticsCollectionEnabled(!kDebugMode);
+      // await FirebaseCrashlytics.instance
+      //     .setCrashlyticsCollectionEnabled(!kDebugMode);
 
       // Pass all uncaught errors from the framework to Crashlytics.
-      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+      // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
       await Hive.initFlutter();
       await openHiveBox(BOX_NAME_SETTINGS);
@@ -41,7 +41,9 @@ Future<void> main() async {
       // Run Material App
       runApp(Root());
     },
-    (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack),
+    (error, stack) {
+      // FirebaseCrashlytics.instance.recordError(error, stack);
+    },
   );
 }
 
@@ -106,9 +108,9 @@ class _RootState extends State<Root> {
         themeMode: currentTheme.currentThemeMode(),
         theme: currentTheme.lightThemeData,
         darkTheme: currentTheme.darkThemeData,
-        navigatorObservers: [
-          FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
-        ],
+        // navigatorObservers: [
+        //   FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+        // ],
         routes: {
           ROUTE_NAME_HOME: (_) => HomeScreen(),
           ROUTE_NAME_SPLASH: (_) => SplashScreen(),
