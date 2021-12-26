@@ -7,7 +7,7 @@ import dotenv
 
 if __name__ == '__main__':
     pxm_home = os.path.dirname(pathlib.Path(__file__).absolute())
-    conf_file_path_regex = f'{pxm_home}/configurations/*.conf'
+    conf_file_path_regex = f'{pxm_home}/.configs/*.conf'
 
     # Load Configurations
     for conf_file in glob.glob(conf_file_path_regex):
@@ -18,5 +18,5 @@ if __name__ == '__main__':
     os.environ['pxm.home'] = pxm_home
 
     # Start Server
-    from server.base import start_server
+    from pxm_server.base import start_server
     start_server()

@@ -2,7 +2,7 @@ import os
 
 from fastapi import FastAPI, Depends
 
-from common.api_version import ApiVersion
+from pxm_common.api_version import ApiVersion
 
 
 async def _common_parameters(version: ApiVersion) -> dict:
