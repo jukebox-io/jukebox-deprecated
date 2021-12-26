@@ -4,3 +4,6 @@
 # Python
 __pycache__/
 *.py[cod]
+
+# Virtual Environment [if any]
+.venv/
