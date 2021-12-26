@@ -1,8 +1,9 @@
 name: pxm
 description: A Flutter Music Player.
+issue_tracker: https://github.com/ProjectX-music/ProjectX-music/issues
 
 publish_to: 'none' # The following line prevents the package from being accidentally published.
-#version: 1.0.0+16
+version: 0.1.0+1
 
 environment:
   sdk: ">=2.13.0 <3.0.0"
@@ -33,7 +34,7 @@ dependencies:
   # Storage related
   path_provider: ^2.0.8
 
-  # Google FireBase
+  # Google
 
 dev_dependencies:
   flutter_test:
