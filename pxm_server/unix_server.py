@@ -1,6 +1,6 @@
 import gunicorn.app.base
 
-from .base import (SERVER_ROUTER, SERVER_HOST, SERVER_PORT, SERVER_WORKER_COUNT, SERVER_WORKER_CLASS)
+from pxm_server.server import (SERVER_ROUTER, SERVER_HOST, SERVER_PORT, SERVER_WORKER_COUNT, SERVER_WORKER_CLASS)
 
 
 def start_unix_server() -> None:
