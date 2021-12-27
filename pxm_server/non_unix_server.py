@@ -1,6 +1,6 @@
 import uvicorn
 
-from .base import (SERVER_ROUTER, SERVER_HOST, SERVER_PORT, SERVER_WORKER_COUNT)
+from pxm_server.server import (SERVER_ROUTER, SERVER_HOST, SERVER_PORT, SERVER_WORKER_COUNT)
 
 
 def start_non_unix_server() -> None:
