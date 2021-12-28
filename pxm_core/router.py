@@ -2,10 +2,10 @@ import os
 
 from fastapi import FastAPI, Depends
 
-from pxm_commons.api_version import ApiVersion
+from pxm_commons.enums import ApiVersionEnum
 
 
-async def _common_parameters(version: ApiVersion) -> dict:
+async def _common_parameters(version: ApiVersionEnum) -> dict:
     """Helper function to get all the common parameters for all REST endpoints."""
     return {'version': version}
 
