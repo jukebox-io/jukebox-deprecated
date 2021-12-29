@@ -20,10 +20,13 @@ back to LastFM from ProjectX Music, for any audio scrobbling activity.
 ## How to deploy the Backend
 
 1. To install all the necessary **python** libraries:
+   
    ```commandline
-    python3 -m pip install -r requirements.txt
+   python3 -m pip install -r requirements.txt
    ```
+   
 2. Not run the `startServer.py` file stored in the root of the project.
+   
    ```commandline
    python3 startServer.py
    ```
@@ -31,5 +34,4 @@ back to LastFM from ProjectX Music, for any audio scrobbling activity.
 ## Who are we ?
 
 We are a group of students interested to explore different technologies extending from Machine Learning to Mobile
-Application, and more. 
-
+Applications, and more.
