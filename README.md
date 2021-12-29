@@ -33,5 +33,5 @@ back to LastFM from ProjectX Music, for any audio scrobbling activity.
 
 ## Who are we ?
 
-We are a group of students of gcettb interested to explore different technologies extending from Machine Learning to Mobile
+We are a group of students interested to explore different technologies extending from Machine Learning to Mobile
 Applications, and more.
