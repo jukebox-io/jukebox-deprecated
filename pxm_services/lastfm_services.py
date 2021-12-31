@@ -15,7 +15,7 @@ def _get_env_or_raise_error(env_key: str, error_msg: str = None) -> str:
 
 _network = pylast.LastFMNetwork(
     api_key=_get_env_or_raise_error('LASTFM_API_KEY'),
-    api_secret=_get_env_or_raise_error('LASTFM_API_KEY'),
+    api_secret=_get_env_or_raise_error('LASTFM_API_SECRET'),
 )  # Read only lastfm network instance
 
 # Enable cache handling mechanism to avoid duplicate calls to the API endpoint.
