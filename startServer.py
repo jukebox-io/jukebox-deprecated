@@ -21,6 +21,7 @@ def _read_version_string() -> str:
 if __name__ == '__main__':
     pxm_home = os.path.dirname(pathlib.Path(__file__).absolute())
     conf_file_path_regex = f'{pxm_home}/pxm_configurations/*.conf'
+    db_migrations_script_location = f'{pxm_home}/db_migrations'
 
     # Load home directory
     os.environ['pxm.home'] = pxm_home
@@ -30,10 +31,15 @@ if __name__ == '__main__':
 
     # Load Configurations
     for conf_file in glob.glob(conf_file_path_regex):
-        dotenv.load_dotenv(dotenv_path=conf_file)
+        dotenv.load_dotenv(dotenv_path=conf_file, override=False)
 
     # Add home dir to python path
     sys.path.append(pxm_home)
+
+    # Run Database Migration Scripts
+    from db_migrations.migration import run_migrations
+
+    run_migrations(db_migrations_script_location, os.environ['database.url'])
 
     # Start Server
     from pxm_server.server import start_server
