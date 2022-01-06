@@ -11,7 +11,7 @@ def start_unix_server() -> None:
                                'workers': SERVER_WORKER_COUNT,
                                'worker_class': SERVER_WORKER_CLASS,
                                'preload_app': True,
-                               'print_config': True
+                               'accesslog': '-',
                            }) \
         .run()
 
