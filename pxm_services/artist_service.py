@@ -1,5 +1,5 @@
 import pxm_commons.entity_manager as em
-from pxm_models.schemas import ArtistEntity
+from pxm_models.entities import ArtistEntity
 
 
 def get_artist_by_pid(pid: int) -> ArtistEntity:

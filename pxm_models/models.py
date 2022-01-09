@@ -1,4 +1,5 @@
 import pydantic
+import typing as ty
 
 
 class Model(pydantic.BaseModel):
@@ -20,4 +21,4 @@ class Track(Model):
     id: int
     title: str
     artist: Artist
-    album: Album
+    album: ty.Optional[Album]

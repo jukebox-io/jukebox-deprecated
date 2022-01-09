@@ -5,7 +5,7 @@ from alembic.config import Config
 from sqlalchemy.engine.url import make_url
 
 
-def run_migrations(script_location: str, db_url: str):
+def run_migrations(script_location: str, db_url: str, downgrade_first: bool = False):
     alembic_cfg = Config()
     alembic_cfg.set_main_option('script_location', script_location)
     alembic_cfg.set_main_option('sqlalchemy.url', db_url)
@@ -15,6 +15,10 @@ def run_migrations(script_location: str, db_url: str):
         # Check and create path/to/script_location/versions
         # Git ignores all empty directories, but it is a necessary for this path to exist
         pathlib.Path(f'{script_location}/versions').mkdir(parents=True, exist_ok=True)
+
+        # Run alembic downgrade command
+        if downgrade_first:
+            command.downgrade(alembic_cfg, 'base')
 
         # Run alembic upgrade command
         command.upgrade(alembic_cfg, 'head')
