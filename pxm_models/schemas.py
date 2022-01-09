@@ -4,7 +4,10 @@ from sqlalchemy.ext.declarative import declarative_base
 
 class BaseEntity(declarative_base()):
     __abstract__ = True
-    __table_args__ = {'extend_existing': True}
+    __table_args__ = {
+        'mysql_engine': 'InnoDB',
+        'extend_existing': True
+    }
 
 
 class ArtistEntity(BaseEntity):
@@ -20,7 +23,7 @@ class ArtistEntity(BaseEntity):
 
 
 class AlbumEntity(BaseEntity):
-    __tablename__ = 'artist'
+    __tablename__ = 'album'
 
     # Columns
     pid: int = Column('pid', Integer, primary_key=True)

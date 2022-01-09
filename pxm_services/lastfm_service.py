@@ -3,13 +3,13 @@ import typing
 
 import pylast
 
-from pxm_services.service_exceptions import ServiceError, ValueError
+from pxm_commons.errors import PxmServiceError, PxmValueError
 
 
 def _get_env_or_raise_error(env_key: str, error_msg: str = None) -> str:
     env_value: str = os.getenv(env_key)
     if not env_value:
-        raise ValueError(error_msg or f"Environment Variable '{env_key}' not found.")
+        raise PxmValueError(error_msg or f"Environment Variable '{env_key}' not found.")
     return env_value
 
 
@@ -49,7 +49,7 @@ def list_trending_artists(limit: int = None, country: str = None) -> list[pylast
             top_artist_list = _network.get_top_artists(limit=limit)
         return list(map(_extract_top_item, top_artist_list))
     except pylast.PyLastError as e:
-        raise ServiceError('Failed to retrieve trending Artist list from last.fm', e)
+        raise PxmServiceError('Failed to retrieve trending Artist list from last.fm', e)
 
 
 def list_trending_tracks(limit: int = None, country: str = None, location: str = None) -> list[pylast.Track]:
@@ -71,7 +71,7 @@ def list_trending_tracks(limit: int = None, country: str = None, location: str =
             top_track_list = _network.get_top_tracks(limit=limit)
         return list(map(_extract_top_item, top_track_list))
     except pylast.PyLastError as e:
-        raise ServiceError('Failed to retrieve trending Track list from last.fm', e)
+        raise PxmServiceError('Failed to retrieve trending Track list from last.fm', e)
 
 
 # // --------------------------------------------------------------------------------------------- find by id
@@ -141,7 +141,7 @@ def search_albums(album_name: str, page: int = 1) -> list[pylast.Album]:
 
         return search_obj.get_next_page()
     except pylast.PyLastError as e:
-        raise ServiceError('Failed to retrieve Album Search Results from last.fm', e)
+        raise PxmServiceError('Failed to retrieve Album Search Results from last.fm', e)
 
 
 def search_artists(artist_name: str, page: int = 1) -> list[pylast.Artist]:
@@ -162,7 +162,7 @@ def search_artists(artist_name: str, page: int = 1) -> list[pylast.Artist]:
 
         return search_obj.get_next_page()
     except pylast.PyLastError as e:
-        raise ServiceError('Failed to retrieve Artist Search Results from last.fm', e)
+        raise PxmServiceError('Failed to retrieve Artist Search Results from last.fm', e)
 
 
 def search_track(track_name: str, artist_name: str = None, page: int = 1) -> list[pylast.Track]:
@@ -184,4 +184,4 @@ def search_track(track_name: str, artist_name: str = None, page: int = 1) -> lis
 
         return search_obj.get_next_page()
     except pylast.PyLastError as e:
-        raise ServiceError('Failed to retrieve Track Search Results from last.fm', e)
+        raise PxmServiceError('Failed to retrieve Track Search Results from last.fm', e)

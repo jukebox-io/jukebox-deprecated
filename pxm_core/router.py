@@ -1,20 +1,14 @@
 import os
 
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 
-from pxm_commons.enums import ApiVersionEnum
+from pxm_resources.api_resource import router as api_router
 
-
-async def _common_parameters(version: ApiVersionEnum) -> dict:
-    """Helper function to get all the common parameters for all REST endpoints."""
-    return {'version': version}
-
-# // ---------------------------------------------------------------------------------------------------- router def
-
-# FastAPI Router
+# FastAPI Router Definition
 router = FastAPI(
     title='ProjectX Music API',
-    version=os.getenv('pxm.version') or 'n/a',
-    dependencies=[Depends(_common_parameters)]
+    version=os.getenv('pxm.version') or 'n/a'
 )
-router.router.prefix = '/api/{version}'  # FastAPI do not allow mentioning prefix during router initialization
+
+# Attach API Router
+router.include_router(api_router)
