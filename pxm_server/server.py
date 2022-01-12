@@ -1,9 +1,11 @@
-import os
 import platform
 import sys
 import time
 
 import psutil
+
+from pxm_commons.enums import Config
+from pxm_utils.config_utils import read_config
 
 
 def start_server():
@@ -59,7 +61,7 @@ def print_intro() -> None:
     print('Worker Count                 :', SERVER_WORKER_COUNT)
     if is_unix(): print('Worker Class                 :', SERVER_WORKER_CLASS)
     print()
-    print('Server Home                  :', os.getenv('pxm.home'))
+    print('Server Home                  :', read_config(Config.APP.HOME))
     print()
     print()
     print('Starting FastAPI server ...')
@@ -98,8 +100,8 @@ def is_unix() -> bool:
 
 # DO NOT CHANGE THESE VALUES AT RUNTIME
 
-SERVER_HOST = os.getenv('server.host') or '0.0.0.0'
-SERVER_PORT = os.getenv('server.port') or 8080
-SERVER_ROUTER = os.getenv('server.router')
-SERVER_WORKER_COUNT = os.getenv('server.worker.count') or auto_detect_worker_count()
-SERVER_WORKER_CLASS = os.getenv('server.worker.class')
+SERVER_HOST = read_config(Config.SERVER.HOST) or '0.0.0.0'
+SERVER_PORT = read_config(Config.SERVER.PORT) or 8080
+SERVER_ROUTER = read_config(Config.SERVER.ROUTER)
+SERVER_WORKER_COUNT = read_config(Config.SERVER.WORKER_COUNT) or auto_detect_worker_count()
+SERVER_WORKER_CLASS = read_config(Config.SERVER.WORKER_CLASS)

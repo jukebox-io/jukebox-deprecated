@@ -22,9 +22,9 @@ For a config file, let's say `example.conf`:
 To access this configuration using `python`:
 
 ```python
-import os
+from pxm_utils.config_utils import read_config
 
-URL = os.getenv('example.url')
+URL = read_config('example.url')
 print('Your url is', URL)
 
 # Output:
