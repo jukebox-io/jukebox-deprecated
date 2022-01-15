@@ -7,8 +7,11 @@ assignees: ''
 
 ---
 
-**Bug Report**
+# Bug Report
 A clear and concise description of what the bug is
 
-**Priority**
+
+## Optional Additional Items
+
+### Priority
 Priority of this bug
