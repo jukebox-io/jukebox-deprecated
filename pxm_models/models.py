@@ -1,23 +1,24 @@
-import pydantic
 import typing as ty
 
+import pydantic
 
-class Model(pydantic.BaseModel):
+
+class _BaseModel(pydantic.BaseModel):
     pass
 
 
-class Artist(Model):
+class Artist(_BaseModel):
     id: int
     name: str
 
 
-class Album(Model):
+class Album(_BaseModel):
     id: int
     title: str
     artist: Artist
 
 
-class Track(Model):
+class Track(_BaseModel):
     id: int
     title: str
     artist: Artist
