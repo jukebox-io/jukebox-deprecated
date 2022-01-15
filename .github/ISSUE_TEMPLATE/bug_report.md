@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 **Bug Report**
-A clear and concise description of what the bug is.
+A clear and concise description of what the bug is
 
 **Priority**
-Eg. High, Medium, or Low priority
+Priority of this bug
