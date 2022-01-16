@@ -7,7 +7,7 @@ from pxm_utils.config_utils import read_config
 # FastAPI Router Definition
 router = FastAPI(
     title='ProjectX Music API',
-    version=read_config(Config.APP.HOME) or 'n/a'
+    version=read_config(Config.APP.VERSION) or 'n/a'
 )
 
 # Attach API Router
