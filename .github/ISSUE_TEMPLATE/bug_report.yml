@@ -22,3 +22,5 @@ body:
         - High
         - Medium
         - Low
+    validations:
+      required: true
