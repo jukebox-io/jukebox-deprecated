@@ -8,9 +8,13 @@ sqlalchemy~=1.4.29
 psycopg2~=2.9.3
 alembic~=1.7.5
 
+# Modeling
+pydantic[email]~=1.9.0
+
+# Network
+pylast~=4.4.0
+
 # Productivity
 psutil~=5.9.0
 python-dotenv~=0.19.2
 pyyaml~=6.0
-pylast~=4.4.0
-pydantic~=1.9.0
