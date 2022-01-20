@@ -3,32 +3,22 @@ import typing
 
 import sqlalchemy.orm
 
+from pxm_models.entities import BaseEntity
+
 _engine = sqlalchemy.create_engine(os.environ['database.url'], future=True)
 
 # Shared session instance
 _session = sqlalchemy.orm.Session(bind=_engine, future=True)
 
 
-# // --------------------------------------------------------------------------------------------- query builder
+# // --------------------------------------------------------------------------------------------- query api
 
-def create_query(*entities, **kwargs) -> sqlalchemy.orm.Query:
-    """Build a new Sqlalchemy Query
-
-    e.g.,
-
-    create_query
-
-    Args:
-        entities: a sequence of entities and/or SQL expressions.
-
-    Returns:
-        A new Query instance.
-    """
-    return _session.query(*entities, **kwargs)
+def fetch_all(query: sqlalchemy.orm.Query) -> list[BaseEntity]:
+    return query.with_session(_session).all()
 
 
-def execute(stmt) -> sqlalchemy.engine.Result:
-    return _session.execute(stmt)
+def fetch_one(query: sqlalchemy.orm.Query) -> BaseEntity:
+    return query.with_session(_session).one_or_none()
 
 
 # // --------------------------------------------------------------------------------------------- transactions api
@@ -41,7 +31,7 @@ def begin_transaction() -> None:
 def end_transaction() -> None:
     """Close any existing transaction"""
     if in_transaction():
-        get_transaction().close()
+        _session.close()
 
 
 def in_transaction() -> bool:

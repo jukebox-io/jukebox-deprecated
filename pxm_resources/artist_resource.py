@@ -1,6 +1,7 @@
 import fastapi
 
 from pxm_commons.errors import PxmServiceError
+from pxm_models.entities import ArtistEntity
 from pxm_models.models import Artist
 from pxm_services import artist_service
 
@@ -12,14 +13,21 @@ async def get_top_artists() -> list[Artist]:
     try:
         top_artists: list[Artist] = list()
 
-        for artist in artist_service.get_top_artists():
+        for artist_entity in artist_service.get_top_artists():
             top_artists.append(
-                Artist(
-                    id=artist.pid,
-                    name=artist.name,
-                )
+                convert_to_artist(artist_entity),
             )
         return top_artists
     except PxmServiceError:
-        # TODO: Log the error
-        return []
+        raise
+    except Exception as e:
+        raise PxmServiceError('Failed to retrieve Top Artists list') from e
+
+
+# // ---------------------------------------------------------------------------------------------- transformation fns
+
+def convert_to_artist(artist_entity: ArtistEntity):
+    return Artist(
+        id=artist_entity.pid,
+        name=artist_entity.name,
+    )

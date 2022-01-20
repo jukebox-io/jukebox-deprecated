@@ -9,52 +9,34 @@ class BaseModel(pyd.BaseModel):
 
 # // --------------------------------------------------------------------------------------- entity models
 
+class _CommonNameIdFields(BaseModel):
+    id: int = pyd.Field(
+        None,
+        description='Unique identifier for this',
+    )
+    name: str = pyd.Field(
+        None,
+        description='A human readable name for this',
+    )
+
+
 # Artist Entity
 
-class Artist(BaseModel):
-    id: int = pyd.Field(
-        None,
-        description='Unique identifier for this artist',
-    )
-    name: str = pyd.Field(
-        None,
-        description='A human readable name for this artist',
-    )
+class Artist(_CommonNameIdFields):
+    pass
 
 
-class ArtistSummary(BaseModel):
-    id: int = pyd.Field(
-        None,
-        description='Unique identifier for this artist',
-    )
-    name: str = pyd.Field(
-        None,
-        description='A human readable name for this artist',
-    )
+class ArtistSummary(Artist):
+    pass
 
 
 # Album Entity
 
-class Album(BaseModel):
-    id: int = pyd.Field(
-        None,
-        description='Unique identifier for this album',
-    )
-    name: str = pyd.Field(
-        None,
-        description='A human readable name for this album',
-    )
+class Album(_CommonNameIdFields):
+    pass
 
 
-class AlbumSummary(BaseModel):
-    id: int = pyd.Field(
-        None,
-        description='Unique identifier for this album',
-    )
-    name: str = pyd.Field(
-        None,
-        description='A human readable name for this album',
-    )
+class AlbumSummary(Album):
     artist: Artist = pyd.Field(
         None,
         description='Associated Artist Entity',
@@ -63,26 +45,11 @@ class AlbumSummary(BaseModel):
 
 # Track Entity
 
-class Track(BaseModel):
-    id: int = pyd.Field(
-        None,
-        description='Unique identifier for this track',
-    )
-    name: str = pyd.Field(
-        None,
-        description='A human readable name for this track',
-    )
+class Track(_CommonNameIdFields):
+    pass
 
 
-class TrackSummary(BaseModel):
-    id: int = pyd.Field(
-        None,
-        description='Unique identifier for this track',
-    )
-    name: str = pyd.Field(
-        None,
-        description='A human readable name for this track',
-    )
+class TrackSummary(Track):
     artist: Artist = pyd.Field(
         None,
         description='Associated Artist Entity',
