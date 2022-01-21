@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
 from pxm_commons.enums import Config
-from pxm_core.docs_builder import get_rapidoc_html
+from pxm_core.docs import get_rapidoc_html
 from pxm_resources.api_resource import router as api_router
 from pxm_utils.config_utils import read_config
 
