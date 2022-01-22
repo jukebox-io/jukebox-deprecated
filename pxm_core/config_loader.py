@@ -1,7 +1,6 @@
 import glob
 import pathlib
 import sys
-from typing import Union
 
 import dotenv
 import yaml
@@ -36,7 +35,7 @@ def _read_version_string() -> str:
             pubspec_props: dict = yaml.load(pubspec_file, Loader=yaml.FullLoader)
 
         return pubspec_props['version']
-    except Union[OSError, yaml.YAMLError]:
+    except OSError | yaml.YAMLError:
         return ''
 
 

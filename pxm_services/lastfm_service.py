@@ -1,5 +1,4 @@
 import os
-import typing
 
 import pylast
 
@@ -49,7 +48,7 @@ def list_trending_artists(limit: int = None, country: str = None) -> list[pylast
             top_artist_list = _network.get_top_artists(limit=limit)
         return list(map(_extract_top_item, top_artist_list))
     except pylast.PyLastError as e:
-        raise PxmServiceError('Failed to retrieve trending Artist list from last.fm', e)
+        raise PxmServiceError('Failed to retrieve trending Artist list from last.fm') from e
 
 
 def list_trending_tracks(limit: int = None, country: str = None, location: str = None) -> list[pylast.Track]:
@@ -71,12 +70,12 @@ def list_trending_tracks(limit: int = None, country: str = None, location: str =
             top_track_list = _network.get_top_tracks(limit=limit)
         return list(map(_extract_top_item, top_track_list))
     except pylast.PyLastError as e:
-        raise PxmServiceError('Failed to retrieve trending Track list from last.fm', e)
+        raise PxmServiceError('Failed to retrieve trending Track list from last.fm') from e
 
 
 # // --------------------------------------------------------------------------------------------- find by id
 
-def find_album_by_id(id: str) -> typing.Optional[pylast.Album]:
+def find_album_by_id(id: str) -> pylast.Album | None:
     """Finds an Album by its MusicBrainz ID
 
     Args:
@@ -87,11 +86,11 @@ def find_album_by_id(id: str) -> typing.Optional[pylast.Album]:
     """
     try:
         return _network.get_album_by_mbid(mbid=id)
-    except pylast.PyLastError as e:
+    except pylast.PyLastError:
         return None
 
 
-def find_artist_by_id(id: str) -> typing.Optional[pylast.Artist]:
+def find_artist_by_id(id: str) -> pylast.Artist | None:
     """Finds an Artist by its MusicBrainz ID
 
     Args:
@@ -102,11 +101,11 @@ def find_artist_by_id(id: str) -> typing.Optional[pylast.Artist]:
     """
     try:
         return _network.get_artist_by_mbid(mbid=id)
-    except pylast.PyLastError as e:
+    except pylast.PyLastError:
         return None
 
 
-def find_track_by_id(id: str) -> typing.Optional[pylast.Track]:
+def find_track_by_id(id: str) -> pylast.Track | None:
     """Finds a Track by its MusicBrainz ID
 
     Args:
@@ -117,7 +116,7 @@ def find_track_by_id(id: str) -> typing.Optional[pylast.Track]:
     """
     try:
         return _network.get_track_by_mbid(mbid=id)
-    except pylast.PyLastError as e:
+    except pylast.PyLastError:
         return None
 
 
@@ -141,7 +140,7 @@ def search_albums(album_name: str, page: int = 1) -> list[pylast.Album]:
 
         return search_obj.get_next_page()
     except pylast.PyLastError as e:
-        raise PxmServiceError('Failed to retrieve Album Search Results from last.fm', e)
+        raise PxmServiceError('Failed to retrieve Album Search Results from last.fm') from e
 
 
 def search_artists(artist_name: str, page: int = 1) -> list[pylast.Artist]:
@@ -162,7 +161,7 @@ def search_artists(artist_name: str, page: int = 1) -> list[pylast.Artist]:
 
         return search_obj.get_next_page()
     except pylast.PyLastError as e:
-        raise PxmServiceError('Failed to retrieve Artist Search Results from last.fm', e)
+        raise PxmServiceError('Failed to retrieve Artist Search Results from last.fm') from e
 
 
 def search_track(track_name: str, artist_name: str = None, page: int = 1) -> list[pylast.Track]:
@@ -184,4 +183,4 @@ def search_track(track_name: str, artist_name: str = None, page: int = 1) -> lis
 
         return search_obj.get_next_page()
     except pylast.PyLastError as e:
-        raise PxmServiceError('Failed to retrieve Track Search Results from last.fm', e)
+        raise PxmServiceError('Failed to retrieve Track Search Results from last.fm') from e

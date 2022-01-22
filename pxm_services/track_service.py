@@ -10,7 +10,7 @@ def get_top_tracks() -> list[TrackEntity]:
     try:
         # TODO: Get from Network
         return []
-    except PxmServiceError as e:
-        raise e
+    except PxmServiceError:
+        raise
     except Exception as e:
-        raise PxmServiceError('Failed to retrieve Top Tracks list', e)
+        raise PxmServiceError('Failed to retrieve Top Tracks list') from e

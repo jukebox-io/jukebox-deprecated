@@ -8,7 +8,7 @@ from pxm_commons.enums import Config
 from pxm_utils.config_utils import read_config
 
 
-def start_server():
+def start_server() -> None:
     # print default intro
     print_intro()
 
@@ -59,7 +59,8 @@ def print_intro() -> None:
     print('Host Address                 :', SERVER_HOST)
     print('Port Address                 :', SERVER_PORT)
     print('Worker Count                 :', SERVER_WORKER_COUNT)
-    if is_unix(): print('Worker Class                 :', SERVER_WORKER_CLASS)
+    if is_unix():
+        print('Worker Class                 :', SERVER_WORKER_CLASS)
     print()
     print('Server Home                  :', read_config(Config.APP.HOME))
     print()
@@ -100,8 +101,8 @@ def is_unix() -> bool:
 
 # DO NOT CHANGE THESE VALUES AT RUNTIME
 
-SERVER_HOST = read_config(Config.SERVER.HOST) or '0.0.0.0'
-SERVER_PORT = read_config(Config.SERVER.PORT) or 8080
-SERVER_ROUTER = read_config(Config.SERVER.ROUTER)
-SERVER_WORKER_COUNT = read_config(Config.SERVER.WORKER_COUNT) or auto_detect_worker_count()
-SERVER_WORKER_CLASS = read_config(Config.SERVER.WORKER_CLASS)
+SERVER_HOST: str = read_config(Config.SERVER.HOST) or '0.0.0.0'
+SERVER_PORT: str = read_config(Config.SERVER.PORT) or '8080'
+SERVER_ROUTER: str | None = read_config(Config.SERVER.ROUTER)
+SERVER_WORKER_COUNT: str = read_config(Config.SERVER.WORKER_COUNT) or str(auto_detect_worker_count())
+SERVER_WORKER_CLASS: str | None = read_config(Config.SERVER.WORKER_CLASS)

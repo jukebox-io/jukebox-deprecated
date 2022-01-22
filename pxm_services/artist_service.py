@@ -63,7 +63,7 @@ def _create_new_artist_from_lastfm_if_not_exists(lastfm_artist: pylast.Artist,
         if not in_transaction:
             em.get_transaction().commit()
         return artist_entity
-    except:
+    except Exception:
         if not in_transaction:
             em.get_transaction().rollback()
         raise
