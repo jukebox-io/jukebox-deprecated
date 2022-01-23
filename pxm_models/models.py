@@ -60,7 +60,7 @@ class User(BaseModel):
     id: int = pyd.Field(
         description='Unique identifier for this user',
     )
-    uname: str = pyd.Field(
+    user_name: str = pyd.Field(
         description='Unique User Name for this user',
     )
 
