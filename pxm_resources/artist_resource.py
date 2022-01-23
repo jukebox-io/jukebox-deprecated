@@ -26,7 +26,7 @@ async def get_top_artists() -> list[Artist]:
 
 # // ---------------------------------------------------------------------------------------------- transformation fns
 
-def convert_to_artist(artist_entity: ArtistEntity):
+def convert_to_artist(artist_entity: ArtistEntity) -> Artist:
     return Artist(
         id=artist_entity.pid,
         name=artist_entity.name,

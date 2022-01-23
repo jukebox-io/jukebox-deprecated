@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Path
+from fastapi import APIRouter, Depends
 
 from pxm_commons.enums import ApiVersionEnum
 from pxm_resources.album_resource import router as album_router

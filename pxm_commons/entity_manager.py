@@ -1,5 +1,4 @@
 import os
-import typing
 
 import sqlalchemy.orm
 
@@ -39,6 +38,6 @@ def in_transaction() -> bool:
     return _session.in_transaction()
 
 
-def get_transaction() -> typing.Optional[sqlalchemy.orm.SessionTransaction]:
+def get_transaction() -> sqlalchemy.orm.SessionTransaction | None:
     """Get the current transaction instance if a transaction has already begun, else None"""
     return _session.get_transaction()

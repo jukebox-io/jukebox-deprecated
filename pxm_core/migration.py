@@ -1,12 +1,18 @@
 import pathlib
 
 from alembic import command
-from alembic.config import Config
+from alembic.config import Config as AlembicConfig
 from sqlalchemy.engine.url import make_url
 
+from pxm_commons.enums import Config
+from pxm_utils.config_utils import read_config
 
-def run_migrations(script_location: str, db_url: str, downgrade_first: bool = False):
-    alembic_cfg = Config()
+
+def run_migrations(downgrade_first: bool = False) -> None:
+    script_location: str = f'{read_config(Config.APP.HOME)}/db_migrations'
+    db_url: str = read_config(Config.DATABASE.URL)
+
+    alembic_cfg = AlembicConfig()
     alembic_cfg.set_main_option('script_location', script_location)
     alembic_cfg.set_main_option('sqlalchemy.url', db_url)
 
@@ -27,6 +33,6 @@ def run_migrations(script_location: str, db_url: str, downgrade_first: bool = Fa
         command.history(alembic_cfg, indicate_current=True)
 
         alembic_cfg.print_stdout('INFO: DB Migrations Successful')
-    except Exception as e:
+    except Exception:
         alembic_cfg.print_stdout('INFO: DB Migrations Failed')
-        raise e
+        raise

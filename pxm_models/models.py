@@ -1,5 +1,3 @@
-import typing as ty
-
 import pydantic as pyd
 
 
@@ -11,11 +9,9 @@ class BaseModel(pyd.BaseModel):
 
 class _CommonNameIdFields(BaseModel):
     id: int = pyd.Field(
-        None,
         description='Unique identifier for this',
     )
     name: str = pyd.Field(
-        None,
         description='A human readable name for this',
     )
 
@@ -38,7 +34,6 @@ class Album(_CommonNameIdFields):
 
 class AlbumSummary(Album):
     artist: Artist = pyd.Field(
-        None,
         description='Associated Artist Entity',
     )
 
@@ -51,11 +46,10 @@ class Track(_CommonNameIdFields):
 
 class TrackSummary(Track):
     artist: Artist = pyd.Field(
-        None,
         description='Associated Artist Entity',
     )
-    album: ty.Optional[Album] = pyd.Field(
-        None,
+    album: Album | None = pyd.Field(
+        default=None,
         description='Associated Album Entity, or null if the track is a single',
     )
 
@@ -64,7 +58,6 @@ class TrackSummary(Track):
 
 class User(BaseModel):
     id: int = pyd.Field(
-        None,
         description='Unique identifier for this user',
     )
     uname: str = pyd.Field(
@@ -79,8 +72,8 @@ class UserSummary(User):
     )
     ph_no: str | None = pyd.Field(
         default=None,
-        description="Unique Email address for this user",
-        regex=r"^(\+)[1-9][0-9\-\(\)\.]{9,15}$"
+        description="Unique Phone Number for this user",
+        regex=r"^(\+)[1-9][0-9\-\(\)\.]{9,15}$",
     )
 
 

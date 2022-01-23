@@ -8,5 +8,5 @@ def start_non_unix_server() -> None:
     uvicorn.run(app=SERVER_ROUTER,
                 host=SERVER_HOST,
                 port=int(SERVER_PORT),  # Expects integer value
-                workers=SERVER_WORKER_COUNT,
+                workers=int(SERVER_WORKER_COUNT),
                 )

@@ -10,7 +10,7 @@ def get_top_albums() -> list[AlbumEntity]:
     try:
         # TODO: Get from Network
         return []
-    except PxmServiceError as e:
-        raise e
+    except PxmServiceError:
+        raise
     except Exception as e:
-        raise PxmServiceError('Failed to retrieve Top Albums list', e)
+        raise PxmServiceError('Failed to retrieve Top Albums list') from e
