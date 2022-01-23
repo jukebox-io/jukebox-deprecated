@@ -35,7 +35,7 @@ def get_rapidoc_html(
         </head>
         <body>
         <rapi-doc
-            allow-authentication = "false" 
+            allow-authentication = "true" 
             allow-search = "true"
             show-info = "true"
             spec-url = "{openapi_url}"
