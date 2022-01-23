@@ -50,3 +50,21 @@ class TrackEntity(BaseEntity):
         self.title = title
         self.artist_pid = artist_pid
         self.album_pid = album_pid
+
+
+class UserEntity(BaseEntity):
+    __tablename__ = 'user'
+
+    # Columns
+    pid: int = Column('pid', Integer, primary_key=True)
+    user_name: str = Column('user_name', String)
+    email: str | None = Column('email', String)
+    phone_no: str | None = Column('phone_no', String)
+    hashed_password: str = Column('hashed_password', String)
+
+    # Methods
+    def __init__(self, user_name: str, hashed_password: str, email: str = None, phone_no: str = None):
+        self.user_name = user_name
+        self.email = email
+        self.phone_no = phone_no
+        self.hashed_password = hashed_password
