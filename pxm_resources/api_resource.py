@@ -1,9 +1,11 @@
 from fastapi import APIRouter, Depends
 
 from pxm_commons.enums import ApiVersionEnum
+from pxm_commons.security import validate_authorization
 from pxm_resources.album_resource import router as album_router
 from pxm_resources.artist_resource import router as artist_router
 from pxm_resources.track_resource import router as track_router
+from pxm_resources.user_resource import router as user_router
 
 
 async def _common_parameters(
@@ -16,7 +18,10 @@ async def _common_parameters(
 # API Router Definition
 router = APIRouter(
     prefix='/api/{version}',
-    dependencies=[Depends(_common_parameters)]
+    dependencies=[
+        Depends(_common_parameters),
+        Depends(validate_authorization)
+    ]
 )
 
 # Attach Artist API Router
@@ -27,3 +32,6 @@ router.include_router(album_router)
 
 # Attach Track API Router
 router.include_router(track_router)
+
+# Attach User API Router
+router.include_router(user_router)

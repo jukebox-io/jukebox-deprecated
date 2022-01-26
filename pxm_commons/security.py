@@ -5,9 +5,17 @@ from fastapi import HTTPException, status, Depends
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 
+from pxm_models.entities import UserEntity
 from pxm_models.models import User, UserLoginInput, AccessToken
+from pxm_services import user_service
 
-_oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth")
+_auth_scheme = OAuth2PasswordBearer(
+    tokenUrl='api/o/oauth2/token',
+    description='Oauth 2.0 password authentication',
+    scopes={
+        'scrobbler': 'Edit, configure, and delete your data'
+    }
+)
 
 
 def perform_login(user_input: UserLoginInput) -> AccessToken:
@@ -17,15 +25,25 @@ def perform_login(user_input: UserLoginInput) -> AccessToken:
     )
 
 
-def validate_authorization() -> None:
-    """Validate Authentication Credentials"""
-    to_decode: str = Depends(_oauth2_scheme)
+def validate_authorization(to_decode: str = Depends(_auth_scheme)) -> None:
+    """Validate Authentication Credentials
 
+    Args:
+        to_decode (str): Token to validate upon
+
+    Returns:
+        Throws auth errors on invalid tokens
+    """
     try:
         decoded_jwt: dict = jwt.decode(to_decode, SECRET_KEY, algorithms=[ALGORITHM])
         user_id: int = decoded_jwt['sub']
 
-        # TODO: Check user_id present in database
+        # Check User
+        user_entity: UserEntity = user_service.get_user_by_pid(user_id)
+        _check_user_entity(user_entity)
+
+    except AuthError:
+        raise
     except Exception as e:
         raise AuthError(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -75,14 +93,23 @@ def _get_password_hash(password: str) -> str:
 
 def _authenticate_user(user_input: UserLoginInput) -> User:
     """Get Authenticated User"""
-    # TODO: Complete its implementation
-    hashed_password: str = 'secret'
+    user_entity: UserEntity = user_service.get_user_by_uid(user_input.uid)
 
     # verify password
-    if _verify_password(user_input.password, hashed_password):
+    if _verify_password(user_input.password, user_entity.hashed_password):
         raise AuthError(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail='Incorrect Password',
         )
 
-    return None  # user
+    # Check User
+    _check_user_entity(user_entity)
+
+    return User(
+        id=user_entity.pid,
+        user_name=user_entity.user_name,
+    )
+
+
+def _check_user_entity(user_entity: UserEntity) -> None:
+    pass
