@@ -9,38 +9,54 @@ from pxm_models.entities import UserEntity
 from pxm_models.models import User, UserLoginInput, AccessToken
 from pxm_services import user_service
 
-_auth_scheme = OAuth2PasswordBearer(
+SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"  # Demo only
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+_oauth_scheme = OAuth2PasswordBearer(
     tokenUrl='api/o/oauth2/token',
-    description='Oauth 2.0 password authentication',
-    scopes={
-        'scrobbler': 'Edit, configure, and delete your data'
-    }
+    description='Oauth 2.0 password authentication'
 )
+_pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
-def perform_login(user_input: UserLoginInput) -> AccessToken:
+# // --------------------------------------------------------------------------------------------- API
+
+def login_user(user_login_creds: UserLoginInput) -> AccessToken:
     """Perform login operation with the given Credentials"""
-    return _create_access_token(
-        user=_authenticate_user(user_input),
-    )
+    try:
+        user: User = _authenticate_user_login(user_login_creds)
+        return _build_access_token(user)
+    except AuthError:
+        raise
+    except Exception as e:
+        raise AuthError(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail='Could not validate credentials',
+        ) from e
 
 
-def validate_authorization(to_decode: str = Depends(_auth_scheme)) -> None:
+def register_new_user(user) -> AccessToken:
+    """Perform signup operation with the given Credentials"""
+    pass
+
+
+def verify_user_authorization(token: str = Depends(_oauth_scheme)) -> None:
     """Validate Authentication Credentials
 
     Args:
-        to_decode (str): Token to validate upon
+        token (str): Token to validate upon
 
     Returns:
         Throws auth errors on invalid tokens
     """
     try:
-        decoded_jwt: dict = jwt.decode(to_decode, SECRET_KEY, algorithms=[ALGORITHM])
+        decoded_jwt: dict = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         user_id: int = decoded_jwt['sub']
 
-        # Check User
+        # Verify User Access Permission
         user_entity: UserEntity = user_service.get_user_by_pid(user_id)
-        _check_user_entity(user_entity)
+        _verify_user_access(user_entity)
 
     except AuthError:
         raise
@@ -58,12 +74,8 @@ class AuthError(HTTPException):
 
 # // --------------------------------------------------------------------------------------------- Token Builder
 
-SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"  # Demo only
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
-
-
-def _create_access_token(user: User) -> AccessToken:
+def _build_access_token(user: User) -> AccessToken:
+    """Builds an access token for the given user"""
     to_encode = {
         "sub": user.id,
         "exp": datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES),
@@ -78,32 +90,29 @@ def _create_access_token(user: User) -> AccessToken:
 
 # // --------------------------------------------------------------------------------------------- Password Validator
 
-_pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+def _verify_password(user: UserEntity, password: str) -> bool:
+    """Verifies that the user with the given password"""
+    return _pwd_context.verify(password, user.hashed_password)
 
 
-def _verify_password(plain_password: str, hashed_password: str) -> bool:
-    # TODO: Replace 'hashed_password' with user.hashed_password
-    return _pwd_context.verify(plain_password, hashed_password)
-
-
-def _get_password_hash(password: str) -> str:
+def _build_hash(password: str) -> str:
     """Build hash of given password"""
     return _pwd_context.hash(password)
 
 
-def _authenticate_user(user_input: UserLoginInput) -> User:
+def _authenticate_user_login(user_input: UserLoginInput) -> User:
     """Get Authenticated User"""
     user_entity: UserEntity = user_service.get_user_by_uid(user_input.uid)
 
     # verify password
-    if _verify_password(user_input.password, user_entity.hashed_password):
+    if _verify_password(user_entity, user_input.password):
         raise AuthError(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail='Incorrect Password',
         )
 
-    # Check User
-    _check_user_entity(user_entity)
+    # Verify User Access Permission
+    _verify_user_access(user_entity)
 
     return User(
         id=user_entity.pid,
@@ -111,5 +120,6 @@ def _authenticate_user(user_input: UserLoginInput) -> User:
     )
 
 
-def _check_user_entity(user_entity: UserEntity) -> None:
+def _verify_user_access(user_entity: UserEntity) -> None:
+    # Everyone is allowed to access for now
     pass

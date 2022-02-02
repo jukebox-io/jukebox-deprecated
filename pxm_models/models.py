@@ -83,7 +83,7 @@ class UserLoginInput(BaseModel):
     )
     password: str = pyd.Field(
         description='Password for this user',
-        min_length=10,
+        min_length=6,
     )
 
 
