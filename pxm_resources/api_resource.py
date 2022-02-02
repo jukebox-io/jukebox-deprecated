@@ -1,25 +1,25 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Path
 
 from pxm_commons.enums import ApiVersionEnum
-from pxm_security.security import verify_user_authorization
 from pxm_resources.album_resource import router as album_router
 from pxm_resources.artist_resource import router as artist_router
 from pxm_resources.track_resource import router as track_router
 from pxm_resources.user_resource import router as user_router
+from pxm_security.security import verify_user_authorization
 
 
-async def _common_parameters(
-        version: ApiVersionEnum = ApiVersionEnum.V1,
-) -> dict:
-    """Helper function to get all the common parameters for all REST endpoints."""
-    return {'version': version}
+async def get_api_version(
+        version: ApiVersionEnum = Path(..., example=ApiVersionEnum.V1, description="API Version Info"),
+) -> ApiVersionEnum:
+    """Gets the API version associated with the endpoint"""
+    return version
 
 
 # API Router Definition
 router = APIRouter(
     prefix='/api/{version}',
     dependencies=[
-        Depends(_common_parameters),
+        Depends(get_api_version),
         Depends(verify_user_authorization)
     ]
 )
