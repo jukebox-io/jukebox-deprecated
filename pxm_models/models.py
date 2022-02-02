@@ -54,12 +54,43 @@ class TrackSummary(Track):
     )
 
 
-# // --------------------------------------------------------------------------------------- user models
+# // --------------------------------------------------------------------------------------- security models
 
 class User(BaseModel):
     id: int = pyd.Field(
         description='Unique identifier for this user',
     )
-    email: pyd.EmailStr = pyd.Field(
-        description='Email address for this user',
+    user_name: str = pyd.Field(
+        description='Unique User Name for this user',
+    )
+
+
+class UserSummary(User):
+    email: pyd.EmailStr | None = pyd.Field(
+        default=None,
+        description='Unique Email address for this user',
+    )
+    ph_no: str | None = pyd.Field(
+        default=None,
+        description="Unique Phone Number for this user",
+        regex=r"^(\+)[1-9][0-9\-\(\)\.]{9,15}$",
+    )
+
+
+class UserLoginInput(BaseModel):
+    uid: str = pyd.Field(
+        description='User Name, Email or Phone Number for this user'
+    )
+    password: str = pyd.Field(
+        description='Password for this user',
+        min_length=6,
+    )
+
+
+class AccessToken(BaseModel):
+    access_token: str = pyd.Field(
+        description='Access Token for this User',
+    )
+    token_type: str = pyd.Field(
+        description='Token Type for this Token',
     )
