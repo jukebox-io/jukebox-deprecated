@@ -2,10 +2,11 @@
 fastapi~=0.73.0
 gunicorn~=20.1.0
 uvicorn[standard]~=0.17.0
+python-multipart~=0.0.5
 
 # Database
 sqlalchemy~=1.4.29
-psycopg2~=2.9.3
+psycopg2-binary~=2.9.3
 alembic~=1.7.5
 
 # Modeling
@@ -17,7 +18,6 @@ pylast~=4.5.0
 # Security
 pyjwt[crypto]~=2.3.0
 passlib[bcrypt]~=1.7.4
-python-multipart~=0.0.5
 
 # Productivity
 psutil~=5.9.0
