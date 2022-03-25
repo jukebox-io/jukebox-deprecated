@@ -9,7 +9,11 @@ from pxm_security.security import verify_user_authorization
 
 
 async def get_api_version(
-        version: ApiVersionEnum = Path(..., example=ApiVersionEnum.V1, description="API Version Info"),
+        version: ApiVersionEnum = Path(
+            ...,
+            example=ApiVersionEnum.V1,
+            description="API Version Info",
+        ),
 ) -> ApiVersionEnum:
     """Gets the API version associated with the endpoint"""
     return version
