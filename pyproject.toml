@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "pxm"
+version = "0.1.0"
+description = ""
+authors = ["Arpan Mahanty <arpan.mahanty.007@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+uvicorn = {extras = ["standard"], version = "^0.18.3"}
+gunicorn = "^20.1.0"
+fastapi = "^0.83.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

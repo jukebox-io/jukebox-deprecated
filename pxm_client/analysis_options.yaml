@@ -1,8 +1,0 @@
-include: package:lint/analysis_options.yaml
-
-linter:
-  rules:
-    prefer_single_quotes: true
-    sort_pub_dependencies: false
-    use_build_context_synchronously: false
-    always_use_package_imports: true
