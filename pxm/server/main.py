@@ -25,4 +25,5 @@ app.add_middleware(
 
 @app.get('/')
 async def root():
-    return {'status': 'up'}
+    from . import __version__
+    return __version__

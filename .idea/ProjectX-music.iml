@@ -7,8 +7,19 @@
       <excludeFolder url="file://$MODULE_DIR$/pxm/client/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/pxm/client/build" />
       <excludeFolder url="file://$MODULE_DIR$/pxm/client/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/__pypackages__/3.10" />
+      <excludeFolder url="file://$MODULE_DIR$/pxm/client/android/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/pxm/client/macos/Flutter/ephemeral" />
+      <excludeFolder url="file://$MODULE_DIR$/pxm/client/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/__pypackages__" />
+      <excludeFolder url="file://$MODULE_DIR$/pxm/client/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/pxm/client/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/pxm/client/build" />
+      <excludeFolder url="file://$MODULE_DIR$/pxm/client/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/pxm/client/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/pxm/client/build" />
     </content>
-    <orderEntry type="jdk" jdkName="Poetry (ProjectX-music)" jdkType="Python SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

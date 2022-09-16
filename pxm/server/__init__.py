@@ -5,7 +5,7 @@ import uvicorn
 
 SERVER_APP = 'pxm.server.main:app'
 SERVER_HOST = '127.0.0.1'
-SERVER_PORT = int(os.environ.get('PORT', '8080'))
+SERVER_PORT = int(os.environ['PORT'] or 8080)
 
 NUMBER_OF_WORKERS = (multiprocessing.cpu_count() * 2) + 1
 
@@ -59,4 +59,4 @@ def run_server() -> None:
         uvicorn.run(SERVER_APP, **options)
 
 
-__all__ = ['run_server', 'SERVER_APP', 'SERVER_HOST', 'SERVER_PORT', 'NUMBER_OF_WORKERS']
+__all__ = ['run_server']
