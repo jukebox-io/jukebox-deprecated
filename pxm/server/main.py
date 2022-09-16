@@ -2,8 +2,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from pxm.server.api.routes import router as api_router
+from pxm.server.version import version
 
-app = FastAPI(title='ProjectX Music API', version='n/a')
+__all__ = ['app']
+
+# Initialize App
+app = FastAPI(title='ProjectX Music API', version=version)
 
 # Routers
 app.include_router(api_router)
@@ -23,7 +27,8 @@ app.add_middleware(
 )
 
 
+# Endpoints
+
 @app.get('/')
 async def root():
-    from . import __version__
-    return __version__
+    return {'status': 'up'}

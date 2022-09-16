@@ -1,4 +1,5 @@
-from pxm.server import run_server
+from pxm.server import start_server
 
+# Entrypoint
 if __name__ == '__main__':
-    run_server()
+    start_server()

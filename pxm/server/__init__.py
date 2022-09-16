@@ -3,14 +3,17 @@ import os
 
 import uvicorn
 
+__all__ = ['start_server']
+
 SERVER_APP = 'pxm.server.main:app'
 SERVER_HOST = '127.0.0.1'
-SERVER_PORT = int(os.environ['PORT'] or 8080)
+SERVER_PORT = int(os.environ.get('PORT') or 8080)
 
 NUMBER_OF_WORKERS = (multiprocessing.cpu_count() * 2) + 1
 
 
-def run_server() -> None:
+# Start Web Server
+def start_server() -> None:
     try:
         # Try with Gunicorn
         options: dict = {
@@ -57,6 +60,3 @@ def run_server() -> None:
         }
 
         uvicorn.run(SERVER_APP, **options)
-
-
-__all__ = ['run_server']
