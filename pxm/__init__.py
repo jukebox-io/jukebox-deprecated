@@ -5,7 +5,7 @@ import uvicorn
 
 __all__ = ['start_server']
 
-SERVER_APP = 'pxm.server.main:app'
+SERVER_APP = 'pxm.main:app'
 SERVER_HOST = '127.0.0.1'
 SERVER_PORT = int(os.environ.get('PORT') or 8080)
 

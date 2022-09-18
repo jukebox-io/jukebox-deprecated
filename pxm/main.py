@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from pxm.server.api.routes import router as api_router
-from pxm.server.version import version
+from pxm.api.routes import router as api_router
+from pxm.version import version
 
 __all__ = ['app']
 
