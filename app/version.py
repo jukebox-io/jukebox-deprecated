@@ -1,19 +1,17 @@
-import toml
-import importlib.metadata
+import yaml
 
 __all__ = ['read_version_info']
 
 
 # Read Version Information
 def read_version_info() -> str:
+    # Read from pubspec.yaml file
     try:
-        # Read from package metadata
-        _dist_metadata = importlib.metadata.metadata('pxm')
-        return _dist_metadata['Version']
-    except ImportError:
-        # Fallback to read directly from .toml file
-        _poetry_metadata = toml.load(r'../../pyproject.toml')['tool']['poetry']
-        return _poetry_metadata['version']
+        with open(r'../pubspec.yaml', 'r') as pubspec_file:
+            _pubspec_metadata = yaml.safe_load(pubspec_file)
+            return _pubspec_metadata['version']
+    except (OSError, yaml.YAMLError):
+        return 'undefined'  # Otherwise
 
 
 # Debug

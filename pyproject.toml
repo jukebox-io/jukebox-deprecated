@@ -1,9 +1,7 @@
 [tool.poetry]
 name = "pxm"
 description = "A short description of the package."
-
-# The following defines the version number for your application. Must be a valid PEP 440 string
-version = "0.1.2"
+version = "0.0.0"   # Used as placeholder only
 
 # Copyrights and Licenses
 license = "MIT"
@@ -53,7 +51,6 @@ uvicorn = { version = "^0.18.3", extras = ["standard"] }
 gunicorn = "^20.1.0"
 SQLAlchemy = "^1.4.41"
 pylast = "^5.0.0"
-toml = "^0.10.2"
 
 
 [build-system]
