@@ -1,3 +1,5 @@
+import pathlib
+
 import yaml
 
 __all__ = ['read_version_info']
@@ -7,11 +9,12 @@ __all__ = ['read_version_info']
 def read_version_info() -> str:
     # Read from pubspec.yaml file
     try:
-        with open(r'../pubspec.yaml', 'r') as pubspec_file:
+        path = pathlib.Path(__file__).parent / r'../pubspec.yaml'
+        with path.open() as pubspec_file:
             _pubspec_metadata = yaml.safe_load(pubspec_file)
             return _pubspec_metadata['version']
     except (OSError, yaml.YAMLError):
-        return 'undefined'  # Otherwise
+        return 'none'  # Otherwise
 
 
 # Debug
