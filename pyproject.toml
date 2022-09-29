@@ -51,7 +51,7 @@ uvicorn = { version = "^0.18.3", extras = ["standard"] }
 gunicorn = "^20.1.0"
 SQLAlchemy = "^1.4.41"
 pylast = "^5.0.0"
-alembic = "^1.8.1"
+yoyo-migrations = "^7.3.2"
 
 
 [build-system]
