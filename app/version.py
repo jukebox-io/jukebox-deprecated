@@ -16,3 +16,7 @@ try:
         __version__ = yaml.safe_load(pubspec_file)['version']
 except (OSError, yaml.YAMLError) as ignored:
     pass
+
+# Debug
+if __name__ == '__main__':
+    print(f"Current App Version: {__version__}")
