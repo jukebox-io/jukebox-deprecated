@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "projectxmusic"
-description = "A short description of the package."
 version = "0.0.0"   # Used as placeholder only
+description = "A Music Recommendation System made using Flutter and backed by FastAPI."
 
 # Copyrights and Licenses
 license = "MIT"
@@ -9,47 +9,14 @@ authors = [
     "Arpan Mahanty <arpan.mahanty.007@gmail.com>",
     "Apratim Sarkar <apratimsarkar13031999@gmail.com>",
 ]
-maintainers = []
-
-# Keywords and Classifiers
-classifiers = [
-    "Development Status :: 1 - Planning",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Framework :: FastAPI",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
-    "Topic :: Multimedia :: Sound/Audio",
-    "Topic :: Multimedia :: Sound/Audio :: Players",
-    "Topic :: Software Development",
-    "Topic :: Scientific/Engineering",
-    "Operating System :: Microsoft :: Windows",
-    "Operating System :: POSIX :: Linux",
-    "Operating System :: POSIX",
-    "Operating System :: Unix",
-    "Operating System :: MacOS",
-]
-keywords = ["python", "fastapi", "rest-api", "music", "music-player", "cloud-music", "lastfm"]
-
-# URLs
-homepage = "https://github.com/ProjectX-Music/ProjectX-Music"
-documentation = "https://github.com/ProjectX-Music/ProjectX-Music/wiki"
-repository = "https://github.com/ProjectX-music/ProjectX-music"
-
-# Extras
-packages = [
-    { include = "app" },
-]
-readme = "README.md"
-
 
 [tool.poetry.dependencies]
 python = "^3.10"
 fastapi = "^0.85.1"
-uvicorn = {extras = ["standard"], version = "^0.18.3"}
+uvicorn = { extras = ["standard"], version = "^0.19.0" }
 gunicorn = "^20.1.0"
 
+[tool.poetry.dev-dependencies]
 
 [build-system]
 requires = ["poetry-core"]

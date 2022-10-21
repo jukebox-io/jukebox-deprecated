@@ -1,5 +1,6 @@
-import os
 import multiprocessing
+
+from backend.core.settings import config
 
 # Server deployment is a complex area, that will depend on what kind of service you're deploying onto.
 #
@@ -11,9 +12,9 @@ import multiprocessing
 #
 # Refer to, https://www.uvicorn.org/deployment/
 
-SERVER_APP = 'app.main:app'
+SERVER_APP = 'backend.main:app'
 SERVER_HOST = '127.0.0.1'
-SERVER_PORT = int(os.environ.get('PORT') or 8080)
+SERVER_PORT = config('PORT', cast=int, default=8080)
 
 
 # Start Production Server (Gunicorn with Uvicorn Workers)

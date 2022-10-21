@@ -4,4 +4,7 @@
     <type id="android" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_19" default="true" project-jdk-name="Poetry (ProjectX-Music)" project-jdk-type="Python SDK" />
+  <component name="SuppressKotlinCodeStyleNotification">
+    <option name="disableForAll" value="true" />
+  </component>
 </project>
