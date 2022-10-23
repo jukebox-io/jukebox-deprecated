@@ -1,4 +1,4 @@
-# ProjectX-Music
+# Cookie Music App
 
 A Music Recommendation System made using Flutter and backed by FastAPI.
 
