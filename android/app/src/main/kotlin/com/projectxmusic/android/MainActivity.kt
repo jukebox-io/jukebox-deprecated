@@ -1,4 +1,4 @@
-package com.example.pxm
+package org.projectxmusic.android
 
 import io.flutter.embedding.android.FlutterActivity
 
