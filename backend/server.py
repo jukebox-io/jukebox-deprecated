@@ -2,7 +2,8 @@ import multiprocessing
 
 from backend.core.settings import config
 
-# Server deployment is a complex area, that will depend on what kind of service you're deploying onto.
+# Server deployment is a complex area, that will depend on what kind of service you're deploying
+# onto.
 #
 # As a general rule, you probably want to:
 #   - Run uvicorn --reload from the command line for local development.
@@ -19,10 +20,11 @@ SERVER_PORT = config('PORT', cast=int, default=8080)
 
 # Start Production Server (Gunicorn with Uvicorn Workers)
 def start_prod_server() -> None:
-    # Gunicorn relies on the operating system to provide all the load balancing when handling requests. Generally
-    # we recommend (2 x $num_cores) + 1 as the number of workers to start off with. While not overly scientific,
-    # the formula is based on the assumption that for a given core, one worker will be reading or writing from the
-    # socket while the other worker is processing a request.
+    # Gunicorn relies on the operating system to provide all the load balancing when handling
+    # requests. Generally we recommend (2 x $num_cores) + 1 as the number of workers to start off
+    # with. While not overly scientific, the formula is based on the assumption that for a given
+    # core, one worker will be reading or writing from the socket while the other worker is
+    # processing a request.
     #
     # Refer to, https://docs.gunicorn.org/en/stable/design.html#how-many-workers
 

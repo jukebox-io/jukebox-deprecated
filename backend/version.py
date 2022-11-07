@@ -7,7 +7,7 @@ import yaml
 # 2) we can import it in setup.py for the same reason
 # 3) we can import it into your module
 
-app_version = 'none'
+app_version = '0.0.0'
 
 try:
     # Try reading version info from pubspec.yaml file
