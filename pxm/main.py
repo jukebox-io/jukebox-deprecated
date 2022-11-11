@@ -2,13 +2,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.datastructures import CommaSeparatedStrings
 
-from backend.core.settings import config
-from backend.version import app_version
+from pxm.core.settings import config
+from pxm.version import pxm_version
 
 # Initialize FastAPI Application
 app = FastAPI(
     title='ProjectX Music API',
-    version=app_version,
+    version=pxm_version,
     description=f'A Music Recommendation System made using Flutter and backed by FastAPI.',
     license_info={
         "name": "MIT",
