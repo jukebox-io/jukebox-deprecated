@@ -22,5 +22,22 @@ uvicorn = { extras = ["standard"], version = "^0.20.0" }
 passlib = { extras = ["bcrypt"], version = "^1.7.4" }
 poethepoet = "^0.16.4"
 
+[tool.poetry.group.test.dependencies]
+pytest = "^7.2.0"
+pytest-cov = "^4.0.0"
+
 [tool.poe.tasks]
-serve = { script = "pxm.server:run" }
+
+    [tool.poe.tasks.serve]
+    help = ""
+    script = "pxm.server:run"
+
+    [tool.poe.tasks.test]
+    help = "Run unit and feature tests"
+    cmd = "python -m pytest"
+
+[tool.pytest.ini_options]
+addopts = "--cov=pxm"
+testpaths = [
+    "pxm/tests"
+]
