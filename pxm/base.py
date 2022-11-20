@@ -6,7 +6,7 @@ from pxm.core.settings import config
 from pxm.version import pxm_version
 
 # Initialize FastAPI Application
-app = FastAPI(
+router = FastAPI(
     title='ProjectX Music API',
     version=pxm_version,
     description=f'A Music Recommendation System made using Flutter and backed by FastAPI.',
@@ -14,6 +14,7 @@ app = FastAPI(
         "name": "MIT",
         "url": "https://github.com/ProjectX-Music/ProjectX-Music/blob/develop/LICENSE",
     },
+    redoc_url='/'
 )
 
 # Configure Additional Routers
@@ -22,7 +23,7 @@ app = FastAPI(
 # Configure CORS Headers (Cross-Origin Resource Sharing)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=CommaSeparatedStrings, default='*')
 
-app.add_middleware(
+router.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_HOSTS,
     allow_credentials=True,

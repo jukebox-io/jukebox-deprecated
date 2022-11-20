@@ -1,3 +1,9 @@
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+    "poetry-core>=1.3.0"
+]
+
 [tool.poetry]
 name = "projectxmusic"
 version = "0.0.0"   # Used as placeholder only
@@ -9,19 +15,12 @@ authors = [
 
 [tool.poetry.dependencies]
 python = "^3.10"
-fastapi = "^0.86.0"
-uvicorn = {extras = ["standard"], version = "^0.19.0"}
+fastapi = "^0.87.0"
 gunicorn = "^20.1.0"
 pyyaml = "^6.0"
-passlib = {extras = ["bcrypt"], version = "^1.7.4"}
-
-[tool.poetry.dev-dependencies]
-pytest = "^7.2.0"
+uvicorn = { extras = ["standard"], version = "^0.20.0" }
+passlib = { extras = ["bcrypt"], version = "^1.7.4" }
 poethepoet = "^0.16.4"
 
 [tool.poe.tasks]
-serve = {script = "pxm.server:start_server"}
-
-[build-system]
-requires = ["poetry-core>=1.3.0"]
-build-backend = "poetry.core.masonry.api"
+serve = { script = "pxm.server:run" }

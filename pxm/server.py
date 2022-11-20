@@ -13,13 +13,11 @@ from pxm.core.settings import config
 #
 # Refer to, https://www.uvicorn.org/deployment/
 
-SERVER_APP = 'pxm.main:app'
-SERVER_HOST = '127.0.0.1'
-SERVER_PORT = config('PORT', cast=int, default=8080)
+SERVER_APP = 'pxm.base:router'
 
 
 # Start Production Server (Gunicorn with Uvicorn Workers)
-def start_server() -> None:
+def run() -> None:
     # Gunicorn relies on the operating system to provide all the load balancing when handling
     # requests. Generally we recommend (2 x $num_cores) + 1 as the number of workers to start off
     # with. While not overly scientific, the formula is based on the assumption that for a given
@@ -28,9 +26,12 @@ def start_server() -> None:
     #
     # Refer to, https://docs.gunicorn.org/en/stable/design.html#how-many-workers
 
+    host = '0.0.0.0'  # serve on public ip addr
+    port = config('PORT', cast=int, default=80),  # default port
+
     # Configure Server
     options: dict = {
-        'bind': '%s:%s' % (SERVER_HOST, SERVER_PORT),
+        'bind': '%s:%s' % (host, port),
         'workers': (multiprocessing.cpu_count() * 2) + 1,
         'worker_class': 'uvicorn.workers.UvicornWorker',
         'preload_app': True,
@@ -68,15 +69,15 @@ def start_server() -> None:
 
 
 # Start Development Server (Uvicorn with Auto Reload Turned-on)
-def start_dev_server() -> None:
+def run_develop() -> None:
     # The `reload` and `workers` parameters are mutually exclusive.
     #
     # Refer to, https://www.uvicorn.org/deployment/#running-programmatically
 
     # Configure Server
     options: dict = {
-        'host': SERVER_HOST,
-        'port': SERVER_PORT,
+        'host': 'localhost',
+        'port': 8080,
         'reload': True,
         'log_level': 'info',
     }
@@ -89,4 +90,4 @@ def start_dev_server() -> None:
 
 # Debug
 if __name__ == '__main__':
-    start_dev_server()  # Start the development server
+    run_develop()  # Start the development server
