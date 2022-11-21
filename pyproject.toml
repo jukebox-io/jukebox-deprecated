@@ -29,7 +29,7 @@ pytest-cov = "^4.0.0"
 [tool.poe.tasks]
 
     [tool.poe.tasks.serve]
-    help = ""
+    help = "Run production server"
     script = "pxm.server:run"
 
     [tool.poe.tasks.test]
@@ -37,7 +37,7 @@ pytest-cov = "^4.0.0"
     cmd = "python -m pytest"
 
 [tool.pytest.ini_options]
-addopts = "--cov=pxm"
+addopts = "--cov pxm --cov-report term:skip-covered"
 testpaths = [
-    "pxm/tests"
+    "tests"
 ]
