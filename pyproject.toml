@@ -21,6 +21,7 @@ pyyaml = "^6.0"
 uvicorn = { extras = ["standard"], version = "^0.20.0" }
 passlib = { extras = ["bcrypt"], version = "^1.7.4" }
 poethepoet = "^0.16.4"
+pylast = "^5.1.0"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^7.2.0"
