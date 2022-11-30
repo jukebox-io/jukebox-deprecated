@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.datastructures import CommaSeparatedStrings
 
-from pxm.core.settings import config
+from pxm.core.settings import server_config
 from pxm.version import pxm_version
 
 # Initialize FastAPI Application
@@ -21,7 +21,7 @@ router = FastAPI(
 
 
 # Configure CORS Headers (Cross-Origin Resource Sharing)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=CommaSeparatedStrings, default='*')
+ALLOWED_HOSTS = server_config.get('ALLOWED_HOSTS', cast=CommaSeparatedStrings, default='*')
 
 router.add_middleware(
     CORSMiddleware,

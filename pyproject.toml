@@ -15,30 +15,17 @@ authors = [
 
 [tool.poetry.dependencies]
 python = "^3.10"
-fastapi = "^0.87.0"
+fastapi = "^0.88.0"
 gunicorn = "^20.1.0"
 pyyaml = "^6.0"
 uvicorn = { extras = ["standard"], version = "^0.20.0" }
 passlib = { extras = ["bcrypt"], version = "^1.7.4" }
-poethepoet = "^0.16.4"
 pylast = "^5.1.0"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^7.2.0"
 pytest-cov = "^4.0.0"
 
-[tool.poe.tasks]
-
-    [tool.poe.tasks.serve]
-    help = "Run production server"
-    script = "pxm.server:run"
-
-    [tool.poe.tasks.test]
-    help = "Run unit and feature tests"
-    cmd = "python -m pytest"
-
 [tool.pytest.ini_options]
 addopts = "--cov pxm --cov-report term:skip-covered"
-testpaths = [
-    "tests"
-]
+testpaths = "tests"

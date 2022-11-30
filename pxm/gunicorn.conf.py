@@ -2,7 +2,7 @@
 
 import multiprocessing
 
-from pxm.core.settings import config
+from pxm.core.settings import server_config
 
 # Server deployment is a complex area, that will depend on what kind of service you're deploying
 # onto.
@@ -18,7 +18,7 @@ from pxm.core.settings import config
 
 # Server socket
 host = '0.0.0.0'  # serve on public ip addr
-port = config('PORT', cast=int, default=80)  # serve on default port 80
+port = server_config.get('PORT', cast=int, default='80')  # serve on default port 80
 bind = '%s:%s' % (host, port)
 
 # Worker processes
