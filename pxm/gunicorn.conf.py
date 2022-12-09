@@ -18,7 +18,7 @@ from pxm.core.settings import server_config
 
 # Server socket
 host = '0.0.0.0'  # serve on public ip addr
-port = server_config.get('PORT', cast=int, default='80')  # serve on default port 80
+port = server_config.get('PORT', cast=int, default='8080')  # serve on default port 80
 bind = '%s:%s' % (host, port)
 
 # Worker processes
