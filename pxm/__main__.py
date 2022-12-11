@@ -1,22 +1,21 @@
-# Configure Development Server (Uvicorn with Auto Reload Turned-on)
-
 import logging
 import os.path
 
 import uvicorn
 
-# Start the development server
-if __name__ == '__main__':
-    # To run directly from within a Python program, you should use uvicorn.run(app, **config)
-    # Refer to, https://www.uvicorn.org/deployment/#running-programmatically
+from pxm.settings import PORT
 
+
+# Start the development server (Uvicorn with Auto Reload Turned-on)
+def main() -> None:
+    # To run directly from within a Python program, you should use uvicorn.run(app, **config)
     uvicorn.run(
+
         # Application
-        app='pxm.base:router',
+        app='pxm.server:router',
 
         # Socket Binding
-        host='localhost',  # serve on localhost ip addr
-        port=8080,
+        host='localhost', port=PORT,  # serve on localhost ip address
 
         # Development
         reload=True,  # The `reload` and `workers` parameters are mutually exclusive.
@@ -25,3 +24,7 @@ if __name__ == '__main__':
         # Logging
         log_level=logging.INFO,
     )
+
+
+if __name__ == '__main__':
+    main()

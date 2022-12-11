@@ -1,14 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from starlette.datastructures import CommaSeparatedStrings
 
-from pxm.core.settings import server_config
-from pxm.version import pxm_version
+from pxm.settings import ALLOWED_HOSTS, APP_VERSION
 
 # Initialize FastAPI Application
 router = FastAPI(
     title='ProjectX Music API',
-    version=pxm_version,
+    version=APP_VERSION,
     description=f'A Music Recommendation System made using Flutter and backed by FastAPI.',
     license_info={
         "name": "MIT",
@@ -21,8 +19,6 @@ router = FastAPI(
 
 
 # Configure CORS Headers (Cross-Origin Resource Sharing)
-ALLOWED_HOSTS = server_config.get('ALLOWED_HOSTS', cast=CommaSeparatedStrings, default='*')
-
 router.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_HOSTS,

@@ -1,8 +1,8 @@
-# Configure Production Server (Gunicorn with Uvicorn Workers)
-
 import multiprocessing
 
-from pxm.core.settings import server_config
+from pxm.settings import PORT
+
+# Configure Production Server (Gunicorn with Uvicorn Workers)
 
 # Server deployment is a complex area, that will depend on what kind of service you're deploying
 # onto.
@@ -17,9 +17,7 @@ from pxm.core.settings import server_config
 
 
 # Server socket
-host = '0.0.0.0'  # serve on public ip addr
-port = server_config.get('PORT', cast=int, default='8080')  # serve on default port 80
-bind = '%s:%s' % (host, port)
+bind = '%s:%s' % ('0.0.0.0', PORT)  # serve on public ip address
 
 # Worker processes
 
@@ -35,7 +33,7 @@ workers = (multiprocessing.cpu_count() * 2) + 1
 worker_class = 'uvicorn.workers.UvicornWorker'
 
 # Server mechanics
-wsgi_app = 'pxm.base:router'
+wsgi_app = 'pxm.server:router'
 preload_app = True
 
 # Logging

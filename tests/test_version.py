@@ -1,5 +1,5 @@
-from pxm.version import pxm_version
+from pxm.settings import APP_VERSION
 
 
 def test_version_availability():
-    assert pxm_version != '0.0.0', 'expected application version, got default placeholder instead'
+    assert APP_VERSION != 'unknown', 'expected application version, got default placeholder instead'
