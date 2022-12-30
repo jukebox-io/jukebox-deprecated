@@ -18,5 +18,5 @@ async def get_user() -> User:
 
 
 @app.post('/api/user')
-async def create_user(user: UserCreate) -> None:
-    pass
+async def create_user(user: UserCreate):
+    return {'id': user.email}

@@ -2,7 +2,6 @@
 import inspect
 import os
 import pathlib
-import warnings
 
 import psutil
 from invoke import task, Context
@@ -27,9 +26,9 @@ def runserver(ctx: Context, prod=False) -> None:
 
     # configure server
     if prod and not psutil.WINDOWS:
-        start_cmd = "gunicorn -c gunicorn.conf.py api.main:app"
+        start_cmd = "gunicorn -c gunicorn.conf.py backend.main:app"
     else:
-        start_cmd = "uvicorn api.main:app --reload"
+        start_cmd = "uvicorn backend.main:app --reload"
 
     # run server
     ctx.run(start_cmd)
