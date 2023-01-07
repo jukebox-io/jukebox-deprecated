@@ -38,16 +38,12 @@ def migrate(ctx: Context, develop: bool = False) -> None:
 
     # configure
     options = f"--no-config-file --batch --database {database}"
-    verbose_mode = "-vv"
-
-    operation = "apply"
-    if develop:
-        operation = "develop"
+    operation = "develop" if develop else "apply"
 
     # execute
     ctx.run(f"yoyo list {options} {migrations_root}")
     print()
-    ctx.run(f"yoyo {operation} {options} {verbose_mode} {migrations_root}")
+    ctx.run(f"yoyo {operation} {options} {migrations_root}")
 
 
 # //-------------------- server --------------------
