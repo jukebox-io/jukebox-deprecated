@@ -15,12 +15,13 @@ uvicorn = { extras = ["standard"], version = "^0.20.0" }
 gunicorn = "^20.1.0"
 
 # Database
-databases = { extras = ["asyncpg"], version = "^0.7.0" }
 yoyo-migrations = "^8.2.0"
+databases = "^0.7.0"
+psycopg2-binary = "^2.9.5"
 
 # Productivity
 psutil = "^5.9.4"
-pydantic = {extras = ["email"], version = "^1.10.2"}
+pydantic = {extras = ["email"], version = "^1.10.4"}
 
 # Others
 python = "^3.10"

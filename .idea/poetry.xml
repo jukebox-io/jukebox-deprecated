@@ -4,6 +4,7 @@
     <option name="poetryVirtualenvPaths">
       <set>
         <option value="C:\Users\arpan\AppData\Local\pypoetry\Cache\virtualenvs\jukebox-1oEsDwEu-py3.11\Scripts\python.exe" />
+        <option value="$USER_HOME$/.cache/pypoetry/virtualenvs/jukebox-78q0W0jW-py3.10/bin/python" />
       </set>
     </option>
   </component>
