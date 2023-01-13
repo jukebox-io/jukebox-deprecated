@@ -11,7 +11,7 @@ from invoke import task, Context
 inspect.getargspec = inspect.getfullargspec
 
 root_dir = pathlib.Path(__file__).parent
-migrations_root = root_dir / 'migrations'
+migrations_root = 'migrations'
 
 
 # //-------------------- migrations --------------------
@@ -43,7 +43,7 @@ def migrate(ctx: Context, develop: bool = False) -> None:
     # execute
     ctx.run(f"yoyo list {options} {migrations_root}")
     print()
-    ctx.run(f"yoyo {operation} {options} {migrations_root}")
+    ctx.run(f"yoyo {operation} -v {options} {migrations_root}")
 
 
 # //-------------------- server --------------------
