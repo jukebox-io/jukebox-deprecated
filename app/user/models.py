@@ -1,9 +1,9 @@
 from pydantic import EmailStr, constr
 
-from .base import BaseModel, IDModelMixin, DateTimeModelMixin
+from ..models import ResourceBase, IDModelMixin, DateTimeModelMixin
 
 
-class UserBase(BaseModel):
+class UserBase(ResourceBase):
     email: EmailStr
     email_verified: bool = False
     is_active: bool = True

@@ -1,4 +1,4 @@
-from backend.config import NUM_WORKERS, PORT
+from app.config import NUM_WORKERS, PORT
 
 # Configure Production Server
 

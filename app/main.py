@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from .model.user import User, UserCreate
+from .user.models import User, UserCreate
 
 # let's create the Web API framework
 app = FastAPI(
