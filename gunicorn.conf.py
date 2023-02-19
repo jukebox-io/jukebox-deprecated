@@ -1,4 +1,4 @@
-from app.config import NUM_WORKERS, PORT
+from jukebox.core.settings import DEFAULT_PORT, GUNICORN_WORKERS_COUNT
 
 # Configure Production Server
 
@@ -13,10 +13,10 @@ from app.config import NUM_WORKERS, PORT
 
 
 # Server socket
-bind = '%s:%s' % ('0.0.0.0', PORT)  # serve on public ip address
+bind = '%s:%s' % ('0.0.0.0', DEFAULT_PORT)  # serve on public ip address
 
 # Worker processes
-workers = NUM_WORKERS
+workers = GUNICORN_WORKERS_COUNT
 worker_class = 'uvicorn.workers.UvicornWorker'
 
 # Server mechanics

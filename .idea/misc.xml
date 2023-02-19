@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="FrameworkDetectionExcludesConfiguration">
-    <type id="android" />
-  </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="Poetry (jukebox)" project-jdk-type="Python SDK" />
-  <component name="SuppressKotlinCodeStyleNotification">
-    <option name="disableForAll" value="true" />
-  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_19" project-jdk-name="Poetry (jukebox)" project-jdk-type="Python SDK" />
 </project>

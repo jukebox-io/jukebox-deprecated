@@ -51,17 +51,14 @@ def migrate(ctx: Context, develop: bool = False) -> None:
 @task(help={'prod': 'run server in production mode'})
 def runserver(ctx: Context, prod=False) -> None:
     """Starts the JukeBox API server"""
-    # configure
-    app_url = "app.main:app"
-
     # change current working directory to project root
     os.chdir(root_dir)
 
     # configure server
     if prod and not psutil.WINDOWS:
-        start_cmd = f"gunicorn {app_url} -c gunicorn.conf.py"
+        start_cmd = f"gunicorn jukebox.main:app -c gunicorn.conf.py"
     else:
-        start_cmd = f"uvicorn {app_url} --reload"
+        start_cmd = f"uvicorn jukebox.main:app --reload"
 
     # run server
     ctx.run(start_cmd)
