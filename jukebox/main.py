@@ -1,8 +1,7 @@
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 
-from jukebox.core.settings import ALLOWED_HOSTS
-from jukebox.api.routes import api
+from jukebox.settings import ALLOWED_HOSTS, CORS_MAX_AGE, API_PREFIX
 
 # Let's create the Web API framework
 app = FastAPI(title='JukeBox API')
@@ -14,8 +13,21 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*'],
-    max_age=24 * 60 * 60,  # 1-day
+    max_age=CORS_MAX_AGE,
 )
 
-# Include API router
-app.include_router(api.router)
+# Authenticated Routes
+private_router = APIRouter()
+
+# Un-Authenticated Routes
+public_router = APIRouter()
+
+
+@public_router.get("/healthcheck")
+async def healthcheck() -> dict:
+    return {"status": "ok"}
+
+
+# Include API routers
+app.include_router(private_router, prefix=API_PREFIX)
+app.include_router(public_router, prefix=API_PREFIX)

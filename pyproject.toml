@@ -1,34 +1,27 @@
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
 [tool.poetry]
 name = "jukebox"
-version = "0.0.0"  # placeholder
-description = "A Music Recommendation System made using Flutter and backed by FastAPI."
+version = "1.0.0"
+description = "An Open Source Music Streaming App."
 authors = ["JukeBox Developers <arpan.mahanty.007@gmail.com>"]
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-
-# Server
 fastapi = "^0.92.0"
 uvicorn = { extras = ["standard"], version = "^0.20.0" }
 gunicorn = "^20.1.0"
-
-# Database
-#yoyo-migrations = "^8.2.0"
-#databases = "^0.7.0"
-#psycopg2-binary = "^2.9.5"
-
-# Model
-pydantic = { extras = ["email"], version = "^1.10.4" }
-
-# Productivity
+pydantic = { extras = ["email"], version = "^1.10.5" }
 psutil = "^5.9.4"
-invoke = "^2.0.0"
-passlib = {extras = ["bcrypt"], version = "^1.7.4"}
-python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+passlib = { extras = ["bcrypt"], version = "^1.7.4" }
+python-jose = { extras = ["cryptography"], version = "^3.3.0" }
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^7.2.0"
+
+[tool.poetry.scripts]
+runserver = "jukebox.tasks:run_server_task"
+migrate = "jukebox.tasks:migrate_task"
+makemigration = "jukebox.tasks:make_migration_task"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
