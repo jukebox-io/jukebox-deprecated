@@ -33,10 +33,10 @@ def run_server_task():
         start_cmd = f"uvicorn {APP_URL} --reload"
 
     # run server
-    run(start_cmd)
+    execute(start_cmd)
 
 
 # //-------------------- utils --------------------
 
-def run(command: str, *, working_dir=ROOT_DIR) -> None:
+def execute(command: str, *, working_dir=ROOT_DIR) -> None:
     subprocess.run(command, shell=True, check=True, cwd=working_dir)

@@ -1,6 +1,7 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
+from jukebox.security import has_access
 from jukebox.settings import ALLOWED_HOSTS, CORS_MAX_AGE, API_PREFIX
 
 # Let's create the Web API framework
@@ -28,6 +29,18 @@ async def healthcheck() -> dict:
     return {"status": "ok"}
 
 
+@private_router.get("/private")
+async def private() -> dict:
+    return {"status": "ok"}
+
+
 # Include API routers
-app.include_router(private_router, prefix=API_PREFIX)
+app.include_router(
+    private_router, prefix=API_PREFIX,
+    dependencies=[Depends(has_access)],
+    responses={
+        401: {"description": "Invalid or expired token"},  # HTTP_401_UNAUTHORIZED
+        403: {"description": "User does not have permission to access this resource"}  # HTTP_403_FORBIDDEN
+    },
+)
 app.include_router(public_router, prefix=API_PREFIX)

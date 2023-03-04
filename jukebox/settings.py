@@ -34,5 +34,5 @@ CORS_MAX_AGE: int = 24 * 60 * 60  # in seconds (default: 1-day)
 
 # JWT Secrets
 # to get a string like this run: "openssl rand -hex 32"
-JWT_SECRET_KEY: str = "86adfa5a45b0ec2201b43e3e0c72ed07d79c183ec0ab81f1e6a098cc63b1d810"
+JWT_SECRET: str = "86adfa5a45b0ec2201b43e3e0c72ed07d79c183ec0ab81f1e6a098cc63b1d810"
 JWT_ALGORITHM: str = "HS256"
