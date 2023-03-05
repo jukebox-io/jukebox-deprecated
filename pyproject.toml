@@ -14,6 +14,9 @@ pydantic = { extras = ["email"], version = "^1.10.5" }
 psutil = "^5.9.4"
 passlib = { extras = ["bcrypt"], version = "^1.7.4" }
 python-jose = { extras = ["cryptography"], version = "^3.3.0" }
+databases = {extras = ["asyncpg"], version = "^0.7.0"}
+yoyo-migrations = "^8.2.0"
+psycopg2-binary = "^2.9.5"
 
 
 [tool.poetry.scripts]
