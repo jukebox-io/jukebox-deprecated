@@ -13,11 +13,12 @@ num_cores = psutil.cpu_count(logical=False) or 0
 APP_URL: str = "jukebox.main:app"
 API_PREFIX: str = "/api"
 ROOT_DIR: pathlib.Path = pathlib.Path(__file__).parents[1]
+MIGRATIONS_DIR: str = "migrations"
 
 # Database Settings
 DATABASE_URL: DatabaseURL = config.get("DATABASE_URL", cast=DatabaseURL)
-MIN_POOL_SIZE: int = 0      # initialize with zero connections
-MAX_POOL_SIZE: int = min(99, (2 * num_cores) + 1)   # don't go beyond 99 connections
+MIN_POOL_SIZE: int = 0  # initialize with zero connections
+MAX_POOL_SIZE: int = min(99, (2 * num_cores) + 1)  # don't go beyond 99 connections
 SSL_MODE = "prefer"
 
 # Server Settings
@@ -41,5 +42,5 @@ CORS_MAX_AGE: int = 24 * 60 * 60  # in seconds (default: 1-day)
 
 # JWT Secrets
 # to get a string like this run: "openssl rand -hex 32"
-JWT_SECRET: str = "86adfa5a45b0ec2201b43e3e0c72ed07d79c183ec0ab81f1e6a098cc63b1d810"
+JWT_SECRET: str = "e0b7ad9e0f798de965af9d656115b05a7d8eefc98c4161a02b8965e9c8572c3a"  # noqa
 JWT_ALGORITHM: str = "HS256"

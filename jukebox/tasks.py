@@ -4,9 +4,7 @@ import subprocess
 
 import psutil
 
-from jukebox.settings import ROOT_DIR, APP_URL, DATABASE_URL
-
-MIGRATIONS_DIR: str = "migrations"
+from jukebox.settings import ROOT_DIR, MIGRATIONS_DIR, APP_URL, DATABASE_URL
 
 
 # //-------------------- migrations --------------------
@@ -73,4 +71,5 @@ def run_server_task():
 # //-------------------- utils --------------------
 
 def execute(command: str, *, working_dir=ROOT_DIR) -> None:
+    """Execute shell commands"""
     subprocess.run(command, shell=True, check=True, cwd=working_dir)
