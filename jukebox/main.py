@@ -3,9 +3,25 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from jukebox.security import has_access
 from jukebox.settings import ALLOWED_HOSTS, CORS_MAX_AGE, API_PREFIX
+from jukebox.commons import database
 
 # Let's create the Web API framework
 app = FastAPI(title='JukeBox API')
+
+
+# Startup and Shutdown Events
+
+@app.on_event("startup")
+async def event_startup():
+    # Establish the connection pool
+    await database.connect()
+
+
+@app.on_event("shutdown")
+async def event_shutdown():
+    # Close all connections in the connection pool
+    await database.disconnect()
+
 
 # Configure CORS (Cross-Origin Resource Sharing)
 app.add_middleware(

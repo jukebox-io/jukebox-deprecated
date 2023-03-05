@@ -7,6 +7,7 @@ from starlette.config import Config
 from starlette.datastructures import CommaSeparatedStrings as csv  # noqa
 
 config = Config(".env")
+num_cores = psutil.cpu_count(logical=False) or 0
 
 # Project Settings
 APP_URL: str = "jukebox.main:app"
@@ -15,6 +16,9 @@ ROOT_DIR: pathlib.Path = pathlib.Path(__file__).parents[1]
 
 # Database Settings
 DATABASE_URL: DatabaseURL = config.get("DATABASE_URL", cast=DatabaseURL)
+MIN_POOL_SIZE: int = 0      # initialize with zero connections
+MAX_POOL_SIZE: int = min(99, (2 * num_cores) + 1)   # don't go beyond 99 connections
+SSL_MODE = "prefer"
 
 # Server Settings
 HOST: str = "0.0.0.0"  # serve on public ip address
@@ -29,7 +33,6 @@ if not WEB_CONCURRENCY > 0:
     # core, one worker will be reading or writing from the socket while the other worker is
     # processing a request.
     # Refer to, https://docs.gunicorn.org/en/stable/design.html#how-many-workers
-    num_cores = psutil.cpu_count(logical=False) or 0
     WEB_CONCURRENCY = (2 * num_cores) + 1
 
 # CORS Settings
