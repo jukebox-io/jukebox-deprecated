@@ -1,8 +1,14 @@
 import argparse
+import itertools
 import os
 import subprocess
 
 import psutil
+import yoyo
+from tabulate import tabulate
+from yoyo.backends import DatabaseBackend
+from yoyo.exceptions import BadMigration
+from yoyo.migrations import topological_sort, MigrationList
 
 from jukebox.settings import ROOT_DIR, MIGRATIONS_DIR, APP_URL, DATABASE_URL
 
@@ -37,17 +43,82 @@ def migrate_task():
                         help="Run in development mode")
     args = parser.parse_args()
 
-    # configure extras
-    extra_args = ["--no-config-file", "--batch", f"--database {DATABASE_URL}"]
+    # Initialize Backend
+    backend: DatabaseBackend = yoyo.get_backend(DATABASE_URL.__str__())
+    migrations: MigrationList = yoyo.read_migrations(MIGRATIONS_DIR)
 
-    # migrate to head
-    execute(f"yoyo-migrate list {' '.join(extra_args)} {MIGRATIONS_DIR}")
+    print("Yoyo migrations", yoyo.__version__)
+    print("Database:", DATABASE_URL.obscure_password)
+    print(f"Successfully read {len(migrations)} migration script(s)")
     print()
 
-    if args.develop:
-        execute(f"yoyo-migrate develop -vv {' '.join(extra_args)} {MIGRATIONS_DIR}")
-    else:
-        execute(f"yoyo-migrate apply -vv {' '.join(extra_args)} {MIGRATIONS_DIR}")
+    if not migrations:
+        return
+
+    # List Migrations
+    with backend.lock():
+        headers = ["Version", "Description", "Type", "State"]
+
+        print("Migrations:")
+        applied_migration_hashes = backend.get_applied_migration_hashes()
+        table = (
+            (m.id, m.module.__doc__, "SQL" if m.is_raw_sql() else "SCRIPT",
+             "Success" if m.hash in applied_migration_hashes else "Pending")
+            for m in topological_sort(migrations)
+        )
+
+        if migrations.post_apply:
+            post_apply = (
+                (m.id, m.module.__doc__, "SQL" if m.is_raw_sql() else "SCRIPT", "Post-apply")
+                for m in topological_sort(migrations.post_apply)
+            )
+            table = itertools.chain(table, post_apply)
+
+        print(tabulate(table, headers, tablefmt="simple_outline"))
+        print()
+
+    # Apply Migrations
+    with backend.lock():
+        def apply_migrations(migrations: MigrationList):  # noqa
+            for m in migrations:
+                print(f" - Migrating database to version '{m.id}'")
+                try:
+                    backend.apply_one(m)
+                except BadMigration:
+                    continue
+            for m in migrations.post_apply:
+                print(f" - Running post-apply script '{m.id}'")
+                backend.apply_one(m, mark=False)
+            print()
+            print(f"Successfully applied {len(migrations)} migration(s) to database")
+            print()
+
+        def rollback_migrations(migrations: MigrationList):  # noqa
+            for m in migrations:
+                print(f" - Rolling back database from version '{m.id}'")
+                try:
+                    backend.rollback_one(m)
+                except BadMigration:
+                    continue
+
+        unapplied_migrations = backend.to_apply(migrations)
+
+        if unapplied_migrations:
+            print(f"Applying {len(unapplied_migrations)} migration(s):")
+            apply_migrations(unapplied_migrations)
+
+        elif args.develop:
+            n = 1
+
+            print(f"Reapplying last {n} migration(s):")
+            rollback_migrations(backend.to_rollback(migrations)[:n])
+
+            unapplied_migrations = backend.to_apply(migrations)
+            apply_migrations(unapplied_migrations)
+
+        else:
+            print("Database up-to-date, no migration needed")
+            print()
 
 
 # //-------------------- server --------------------
