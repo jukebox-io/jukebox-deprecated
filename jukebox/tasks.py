@@ -28,7 +28,7 @@ def make_migration_task():
     if not message:
         message = input("Please describe your migration: ")
 
-    extra_args = ["--no-config-file", "--batch", f"--message '{message}'"]
+    extra_args = ["--no-config-file", "--batch", "--message", '"' + message + '"']
     if not args.scriptable:
         extra_args += ["--sql"]
 
