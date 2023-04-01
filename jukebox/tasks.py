@@ -131,7 +131,7 @@ def run_server_task():
 
     # configure server
     if args.prod and not psutil.WINDOWS:
-        start_cmd = f"gunicorn {APP_URL} -c deploy/gunicorn.conf.py"
+        start_cmd = f"gunicorn {APP_URL} -c misc/gunicorn.conf.py"
     else:
         start_cmd = f"uvicorn {APP_URL} --reload"
 

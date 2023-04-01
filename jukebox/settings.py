@@ -6,7 +6,7 @@ from databases import DatabaseURL
 from starlette.config import Config
 from starlette.datastructures import CommaSeparatedStrings as csv  # noqa
 
-config = Config(".env")
+config = Config(env_file="misc/development.conf")    # read development config if present
 num_cores = psutil.cpu_count(logical=False) or 0
 
 # Project Settings
