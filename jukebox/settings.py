@@ -19,7 +19,7 @@ num_cores: int = psutil.cpu_count(logical=False) or 0
 APP_URL: str = "jukebox.main:app"
 API_PREFIX: str = "/api"
 ROOT_DIR: pathlib.Path = pathlib.Path(__file__).parents[1]
-MIGRATIONS_DIR: str = "migrations"
+MIGRATIONS_DIR: pathlib.Path = ROOT_DIR / "migrations"
 
 # Database Settings
 DATABASE_URL: DatabaseURL = config.get("DATABASE_URL", cast=DatabaseURL)

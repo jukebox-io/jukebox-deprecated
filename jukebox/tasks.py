@@ -45,11 +45,11 @@ def migrate_task():
 
     # Initialize Backend
     backend: DatabaseBackend = yoyo.get_backend(DATABASE_URL.__str__())
-    migrations: MigrationList = yoyo.read_migrations(MIGRATIONS_DIR)
+    migrations: MigrationList = yoyo.read_migrations(f'{MIGRATIONS_DIR}')
 
     print("Yoyo migrations", yoyo.__version__)
     print("Database:", DATABASE_URL.obscure_password)
-    print(f"Successfully read {len(migrations)} migration script(s)")
+    print(f"Successfully read {len(migrations)} migration script(s) from {MIGRATIONS_DIR}")
     print()
 
     if not migrations:
