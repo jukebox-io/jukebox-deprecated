@@ -6,8 +6,14 @@ from databases import DatabaseURL
 from starlette.config import Config
 from starlette.datastructures import CommaSeparatedStrings as csv  # noqa
 
-config = Config(env_file="misc/development.conf")    # read development config if present
-num_cores = psutil.cpu_count(logical=False) or 0
+# The configuration will be read from different sources in the following order:
+#   1. Environment Variables (mostly used during production)
+#   2. development.conf (if available, sets development defaults for required configurations)
+#   3. Default value (some of the configuration is optional and will be assigned default value automatically)
+config = Config(env_file="misc/development.conf")  # read development config if present
+
+# Shared attributes
+num_cores: int = psutil.cpu_count(logical=False) or 0
 
 # Project Settings
 APP_URL: str = "jukebox.main:app"

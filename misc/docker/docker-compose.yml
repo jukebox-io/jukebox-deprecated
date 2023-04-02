@@ -1,0 +1,8 @@
+version: '3.9'
+services:
+  database:
+    image: postgres:14.7
+    restart: on-failure
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
