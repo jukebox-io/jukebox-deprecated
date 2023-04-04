@@ -1,5 +1,7 @@
 # jukebox
 
+[![CodeQL](https://github.com/jukebox-io/jukebox/actions/workflows/codeql.yml/badge.svg)](https://github.com/jukebox-io/jukebox/actions/workflows/codeql.yml)
+
 A new Flutter project.
 
 ## Getting Started
