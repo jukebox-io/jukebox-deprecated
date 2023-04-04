@@ -1,13 +1,13 @@
 name: "CodeQL"
 
 on:
-  push:
-    branches: [ "develop" ]
-  pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ "develop" ]
+  # push:
+  #   branches: [ "develop" ]
+  # pull_request:
+  #   # The branches below must be a subset of the branches above
+  #   branches: [ "develop" ]
   schedule:
-    - cron: '33 7 * * 1'
+    - cron: '0 0 * * 0'
 
 jobs:
   analyze:
@@ -20,9 +20,6 @@ jobs:
 
     strategy:
       fail-fast: false
-      matrix:
-        language: ['python' ]
-        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
 
     steps:
     - name: Checkout repository
@@ -32,9 +29,9 @@ jobs:
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
-        languages: ${{ matrix.language }}
+        languages: python
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
       with:
-        category: "/language:${{matrix.language}}"
+        category: "/language:python"
