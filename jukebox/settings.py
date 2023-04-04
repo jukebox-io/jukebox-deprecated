@@ -1,3 +1,4 @@
+import logging
 import pathlib
 from typing import Sequence
 
@@ -16,7 +17,6 @@ config = Config(env_file="misc/development.conf")  # read development config if 
 num_cores: int = psutil.cpu_count(logical=False) or 0
 
 # Project Settings
-APP_URL: str = "jukebox.main:app"
 API_PREFIX: str = "/api"
 ROOT_DIR: pathlib.Path = pathlib.Path(__file__).parents[1]
 MIGRATIONS_DIR: pathlib.Path = ROOT_DIR / "migrations"
