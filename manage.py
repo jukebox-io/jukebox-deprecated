@@ -180,6 +180,26 @@ def make_migration(message: str, scriptable: bool):
             f"--message \"{message}\" {MIGRATIONS_DIR}")
 
 
+# //-------------------- docker --------------------
+
+@cli.command()
+def build_image():
+    """Build docker image to be used by tools like kubernetes"""
+    execute("docker build --force-rm -t jukebox:latest .")
+
+
+@cli.command()
+def compose_up():
+    """Start the default docker compose server"""
+    execute("docker-compose up --remove-orphans")
+
+
+@cli.command()
+def compose_down():
+    """Stop the default docker compose server"""
+    execute("docker-compose down --remove-orphans")
+
+
 # //-------------------- main --------------------
 
 if __name__ == '__main__':
