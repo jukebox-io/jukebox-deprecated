@@ -1,5 +1,6 @@
 version: '3.9'
 
+# noinspection ComposeUnknownValues
 x-app-volumes: &app-volumes
   - ./jukebox:/code/jukebox/:rw,cached
   - ./migrations:/code/migrations/:rw,cached
