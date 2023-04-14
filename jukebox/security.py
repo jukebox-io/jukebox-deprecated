@@ -43,6 +43,6 @@ def generate_password_hash(secret: str) -> str:
     return pwd_context.hash(secret)
 
 
-def validate_password(secret: str, hash: str) -> bool:
+def validate_password(secret: str, hashed_secret: str) -> bool:
     """Validates the password hash"""
-    return pwd_context.verify(secret, hash)
+    return pwd_context.verify(secret, hashed_secret)

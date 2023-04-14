@@ -40,8 +40,8 @@ private_router = APIRouter()
 public_router = APIRouter()
 
 
-@public_router.get("/healthcheck")
-async def healthcheck() -> dict:
+@public_router.get("/health-check")
+async def health_check() -> dict:
     return {"status": "ok"}
 
 
@@ -51,7 +51,7 @@ async def private() -> dict:
 
 
 # Include API routers
-app.include_router(
+app.include_router(  # For public router
     private_router, prefix=API_PREFIX,
     dependencies=[Depends(has_access)],
     responses={
@@ -59,4 +59,6 @@ app.include_router(
         403: {"description": "User does not have permission to access this resource"}  # HTTP_403_FORBIDDEN
     },
 )
-app.include_router(public_router, prefix=API_PREFIX)
+app.include_router(  # For private router
+    public_router, prefix=API_PREFIX,
+)
