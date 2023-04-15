@@ -1,6 +1,6 @@
 import itertools
 import os
-import subprocess
+import pathlib
 import textwrap
 
 import click
@@ -9,7 +9,10 @@ from tabulate import tabulate
 from yoyo.backends import DatabaseBackend
 from yoyo.migrations import MigrationList, Migration, topological_sort
 
-from jukebox.settings import ROOT_DIR, MIGRATIONS_DIR, DATABASE_URL
+from jukebox.database import DATABASE_URL
+from jukebox.utils import PROJECT_ROOT, run_shell_command
+
+MIGRATIONS_ROOT: pathlib.Path = PROJECT_ROOT / "migrations"
 
 
 @click.group()
@@ -19,11 +22,6 @@ def cli() -> None:
     environment.
     """
     pass
-
-
-def execute(command: str, *, working_dir=ROOT_DIR) -> None:
-    """Execute shell commands"""
-    subprocess.run(command, shell=True, check=True, cwd=working_dir)
 
 
 # //-------------------- server --------------------
@@ -38,11 +36,11 @@ def runserver(mode: str) -> None:
     match mode:
         case "production":
             # Run with multiple workers and load balancing
-            execute("gunicorn jukebox.main:app -c misc/gunicorn.conf.py")
+            run_shell_command("gunicorn jukebox.main:app -c misc/gunicorn.conf.py")
 
         case "development":
             # Run with single worker and hot-reloading
-            execute("uvicorn jukebox.main:app --reload")
+            run_shell_command("uvicorn jukebox.main:app --reload")
 
         case _:
             raise ValueError("Invalid mode selected for runserver command: " + mode)
@@ -58,26 +56,34 @@ def migrate(develop: bool) -> None:
     """Run pre-start tasks including db migrations"""
 
     # Initialize Backend
-    backend: DatabaseBackend = yoyo.get_backend(DATABASE_URL.__str__())
-    migrations: MigrationList = yoyo.read_migrations(f'{MIGRATIONS_DIR}')
+    backend: DatabaseBackend = yoyo.get_backend(f'{DATABASE_URL}')
+    migrations: MigrationList = yoyo.read_migrations(f'{MIGRATIONS_ROOT}')
 
     click.echo("Yoyo migrations " + yoyo.__version__)
     click.echo("Database: " + DATABASE_URL.obscure_password)
-    click.echo(f"Successfully read {len(migrations)} migration script(s) from {MIGRATIONS_DIR}")
-    click.echo()
 
-    if len(migrations) == 0:
-        return  # exit if no migrations
+    if migrations:
+        click.echo(f"Successfully read {len(migrations)} migration script(s) from {MIGRATIONS_ROOT}")
+        click.echo()
 
-    # List Migrations
-    list_migrations(backend, migrations)
+        # List Migrations
+        list_migrations(backend, migrations)
 
-    # Apply Migrations
-    run_migrations(backend, migrations, develop)
+        # Apply Migrations
+        run_migrations(backend, migrations, develop)
+
+    else:
+        click.echo(f"No migration script(s) found in {MIGRATIONS_ROOT}", err=True)
+        click.echo()
 
 
 def list_migrations(backend: DatabaseBackend, migrations: MigrationList) -> None:
-    """List the current state of database migration in a tabular form"""
+    """List the current state of database migration in a tabular form
+
+    Args:
+        backend (DatabaseBackend): The database backend to use.
+        migrations (MigrationList): The list of all migrations read from files.
+    """
 
     click.echo("Migrations:")
 
@@ -113,7 +119,16 @@ def list_migrations(backend: DatabaseBackend, migrations: MigrationList) -> None
 
 
 def run_migrations(backend: DatabaseBackend, migrations: MigrationList, develop: bool = False) -> None:
-    """Applies migrations to the target database"""
+    """Applies any unapplied migrations to the target database
+
+    If running in development mode, and there are no unapplied migrations, rollback and reapply the most recent
+    migration. This is preferred when writing migration scripts during development.
+
+    Args:
+        backend (DatabaseBackend): The database backend to use.
+        migrations (MigrationList): The list of all migrations read from files.
+        develop (bool): Should run in development mode. (default: false)
+    """
 
     def apply_migrations(to_apply: MigrationList) -> None:
         # apply pending migrations
@@ -172,12 +187,14 @@ def make_migration(message: str, scriptable: bool):
     """Create a new db migration script"""
 
     # create migration scripts folder if not exist
-    os.makedirs(MIGRATIONS_DIR, exist_ok=True)
+    os.makedirs(MIGRATIONS_ROOT, exist_ok=True)
 
     # create migration file using the "yoyo-migrate new" command
     message = message.replace("\"", "\\\"")
-    execute(f"yoyo-migrate new --no-config-file --batch {'' if scriptable else '--sql'} "
-            f"--message \"{message}\" {MIGRATIONS_DIR}")
+    options = f"--no-config-file --batch --message \"{message}\""
+    if not scriptable:
+        options += " --sql"
+    run_shell_command(f"yoyo-migrate new {options} {MIGRATIONS_ROOT}")
 
 
 # //-------------------- docker --------------------
@@ -185,19 +202,19 @@ def make_migration(message: str, scriptable: bool):
 @cli.command()
 def build_image():
     """Build docker image to be used by tools like kubernetes"""
-    execute("docker build --force-rm -t jukebox:latest .")
+    run_shell_command("docker build --force-rm -t jukebox:latest .")
 
 
 @cli.command()
 def compose_up():
     """Start the default docker compose server"""
-    execute("docker-compose up --remove-orphans")
+    run_shell_command("docker-compose up --remove-orphans")
 
 
 @cli.command()
 def compose_down():
     """Stop the default docker compose server"""
-    execute("docker-compose down --remove-orphans")
+    run_shell_command("docker-compose down --remove-orphans")
 
 
 # //-------------------- main --------------------

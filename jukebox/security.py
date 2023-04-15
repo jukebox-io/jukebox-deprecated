@@ -1,27 +1,37 @@
 from fastapi import Depends, HTTPException, Request
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from jose import jwt, JWTError
+from fastapi.security import HTTPBearer
+from jose import jwt, JWTError  # noqa
 from passlib.context import CryptContext
+from starlette.datastructures import Secret
 from starlette.status import HTTP_403_FORBIDDEN
 
-from jukebox.settings import JWT_SECRET, JWT_ALGORITHM
+from jukebox.settings import settings
 
-BEARER_FORMAT: str = "JWT"
-SCHEMA_NAME: str = "bearerAuth"
-DESCRIPTION: str = "JWT Bearer authentication scheme. Clients must include a JWT token in the 'Authorization' header " \
-                   "of each request with the format 'Bearer &lt;token&gt;'."
+ACCESS_TOKEN_EXPIRE_MINUTES: int = 30  # 30 minutes
+REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
+
+ALGORITHM: str = "HS256"
+
+JWT_SECRET_KEY: Secret = settings.get('JWT_SECRET_KEY', cast=Secret)  # should be kept secret
+JWT_REFRESH_SECRET_KEY: Secret = settings.get('JWT_REFRESH_SECRET_KEY', cast=Secret)  # should be kept secret
 
 # Security Context
-bearer_auth = HTTPBearer(bearerFormat=BEARER_FORMAT, scheme_name=SCHEMA_NAME, description=DESCRIPTION, auto_error=True)
+bearer_auth = HTTPBearer(
+    bearerFormat='JWT',
+    scheme_name='bearerAuth',
+    description="JWT Bearer authentication scheme. Clients must include a JWT token in the 'Authorization' header of "
+                "each request with the format 'Bearer &lt;token&gt;'.",
+    auto_error=True,
+)
 
 
-def has_access(request: Request, credentials: HTTPAuthorizationCredentials = Depends(bearer_auth)) -> None:
+def check_access(request: Request, credentials=Depends(bearer_auth)) -> None:
     """FastAPI dependency to check and validate access to API endpoints"""
     auth_token: str = credentials.credentials
 
     # Decode JWT token
     try:
-        claims: dict = jwt.decode(auth_token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        claims: dict = jwt.decode(auth_token, str(JWT_SECRET_KEY), algorithms=[ALGORITHM])
     except JWTError:
         raise HTTPException(
             status_code=HTTP_403_FORBIDDEN, detail="Invalid or expired token"
