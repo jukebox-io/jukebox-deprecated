@@ -13,6 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
+  beamer: ^1.5.3
 
 dev_dependencies:
   flutter_test:
@@ -21,10 +22,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true  # Enable generation of localized Strings from arb files.
 
-  # Enable generation of localized Strings from arb files.
-  generate: true
-
+  # Add assets to the application.
   assets:
-    # Add assets to the application.
     - assets/
