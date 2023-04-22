@@ -1,6 +1,7 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:jukebox/Screens/Home/home.dart';
+
+import './Screens/Home/home.dart';
 
 class JukeBoxApp extends StatelessWidget {
   JukeBoxApp({Key? key}) : super(key: key);
