@@ -1,12 +1,16 @@
 [tool.poetry]
 name = "jukebox"
-version = "1.0.0"
+version = "0.2.1"
 description = "An Open Source Music Streaming App."
 authors = ["JukeBox Developers <arpan.mahanty.007@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
+
+fastapi = "^0.95.1"
+rocketry = "^2.5.1"
+pyyaml = "^6.0"
 
 
 [build-system]
