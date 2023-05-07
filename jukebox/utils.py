@@ -31,7 +31,7 @@ loggers:
 logging.config.dictConfig(logging_config)
 
 
-def build_logger(name: str = None) -> logging.Logger:
+def getLogger(name: str = None) -> logging.Logger:  # noqa
     """
     Return a logger with the specified name, creating it if necessary.
 

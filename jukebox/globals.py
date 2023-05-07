@@ -4,6 +4,6 @@
 
 from jukebox import utils
 
-logger = utils.build_logger('jukebox.main')
+logger = utils.getLogger('jukebox.main')
 
 ID_VERSION: str = '0.2.1'

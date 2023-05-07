@@ -6,12 +6,12 @@ from rocketry import Rocketry
 
 from jukebox import utils
 
-logger = utils.build_logger('jukebox.service')
+logger = utils.getLogger('jukebox.service')
 
 rocketry = Rocketry()
 
 
-@rocketry.task('every 1 seconds')
+@rocketry.task('every 10 seconds')
 def do_ping():
     logger.info('Ping')
 
