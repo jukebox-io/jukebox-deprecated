@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="eaf11264-61a8-48bb-b1ba-b6106fefdb64" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/jukebox/database/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jukebox/database/core.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jukebox/database/migrations.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jukebox/database/revisions/20230515_01_L3Z8h.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jukebox/database/revisions/20230515_02_Im3K8.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jukebox/database/revisions/20230515_03_Im3K8.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jukebox/database/revisions/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/copyright" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/jukebox/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/jukebox/__main__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/jukebox/database.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/jukebox/globals.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/jukebox/jobs.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/jukebox/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/jukebox/migrations.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/jukebox/settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/jukebox/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/poetry.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jukebox/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/jukebox/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jukebox/__main__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jukebox/globals.py" beforeDir="false" afterPath="$PROJECT_DIR$/jukebox/globals.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jukebox/jobs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jukebox/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/jukebox/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jukebox/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/jukebox/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/backup/development.conf" beforeDir="false" afterPath="$PROJECT_DIR$/misc/development.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/poetry.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2PkC2V8G7zX8Zf2LEhncj7r4k2x" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="1" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="showExcludedFiles" value="false" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showScratchesAndConsoles" value="false" />
+    <option name="sortByType" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/arpan/PROJECT/jukebox/jukebox/database/revisions&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/jukebox/database/revisions" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="globals" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="jukebox" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/jukebox" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/jukebox/globals.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="migrations" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="jukebox" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/jukebox/database" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/jukebox/database/migrations.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.migrations" />
+        <item itemvalue="Python.globals" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="eaf11264-61a8-48bb-b1ba-b6106fefdb64" name="Changes" comment="" />
+      <created>1683991486355</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1683991486355</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

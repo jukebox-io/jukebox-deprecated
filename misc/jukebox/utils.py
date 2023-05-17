@@ -11,7 +11,6 @@ import yaml
 # Logging Utilities
 # ------------------------------------------------------------------------------------
 
-# Configure logging
 logging_config: dict = yaml.safe_load("""
 version: 1
 disable_existing_loggers: true
@@ -32,8 +31,10 @@ loggers:
 logging.config.dictConfig(logging_config)
 
 
-def get_logger(scope: str = 'default'):
+def getLogger(name: str = None) -> logging.Logger:  # noqa
     """
-    Get a logger for the given scope.
+    Return a logger with the specified name, creating it if necessary.
+
+    If no name is specified, return the root logger.
     """
-    return logging.getLogger(f'jukebox.{scope}')
+    return logging.getLogger(name)
