@@ -6,13 +6,8 @@ import pathlib
 
 import starlette.config
 
-from jukebox import utils
-
 version: str = "0.2.1"
 root: pathlib.Path = pathlib.Path(__file__).parents[1]
-
-# Default Logger
-logger = utils.get_logger()
 
 # Configuration
 

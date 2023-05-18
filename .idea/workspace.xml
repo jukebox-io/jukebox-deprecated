@@ -4,35 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eaf11264-61a8-48bb-b1ba-b6106fefdb64" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/jukebox/database/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jukebox/database/core.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jukebox/database/migrations.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jukebox/database/revisions/20230515_01_L3Z8h.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jukebox/database/revisions/20230515_02_Im3K8.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jukebox/database/revisions/20230515_03_Im3K8.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jukebox/database/revisions/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/misc/copyright" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/misc/jukebox/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/misc/jukebox/__main__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/misc/jukebox/database.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/misc/jukebox/globals.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/misc/jukebox/jobs.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/misc/jukebox/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/misc/jukebox/migrations.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/misc/jukebox/settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/misc/jukebox/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poetry.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jukebox/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/jukebox/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jukebox/__main__.py" beforeDir="false" />
+    <list default="true" id="eaf11264-61a8-48bb-b1ba-b6106fefdb64" name="Changes" comment="Implemented migrations.py">
+      <change afterPath="$PROJECT_DIR$/bin/dbPatch.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bin/startServer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jukebox/config/logging.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jukebox/globals.py" beforeDir="false" afterPath="$PROJECT_DIR$/jukebox/globals.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jukebox/jobs.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/jukebox/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/jukebox/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jukebox/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/jukebox/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/backup/development.conf" beforeDir="false" afterPath="$PROJECT_DIR$/misc/development.conf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/poetry.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
     </list>
@@ -92,54 +71,6 @@
       <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
       <method v="2" />
     </configuration>
-    <configuration name="globals" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="jukebox" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/jukebox" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/jukebox/globals.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="migrations" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="jukebox" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/jukebox/database" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/jukebox/database/migrations.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python.migrations" />
-        <item itemvalue="Python.globals" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -150,10 +81,20 @@
       <option name="presentableId" value="Default" />
       <updated>1683991486355</updated>
     </task>
+    <task id="LOCAL-00001" summary="Implemented migrations.py">
+      <created>1684291747063</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1684291747063</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Implemented migrations.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented migrations.py" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

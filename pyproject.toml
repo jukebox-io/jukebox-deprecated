@@ -10,6 +10,7 @@ python = "^3.11"
 
 fastapi = "^0.95.1"
 rocketry = "^2.5.1"
+uvicorn = "^0.22.0"
 databases = { extras = ["asyncpg"], version = "^0.7.0" }
 yoyo-migrations = "^8.2.0"
 psycopg2-binary = "^2.9.6"
