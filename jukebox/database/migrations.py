@@ -119,4 +119,5 @@ def perform_migrations(develop: bool = False) -> None:
 
 
 if __name__ == '__main__':
+    # Run pending migrations (if any)
     perform_migrations()
