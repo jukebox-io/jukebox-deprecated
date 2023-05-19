@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  webapp:
+    container_name: jukebox-webapp
+    build:
+      context: .
+    command: ["uvicorn", "jukebox.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      DATABASE_URL: postgres://postgres:admin123@database:5432/jukebox
+    volumes:
+      - ./jukebox:/opt/jukebox
+    ports:
+      - "8000:8000"
+    depends_on:
+      - migrate
+      - database
+    links:
+      - database
+    restart: always
+
+  database:
+    container_name: jukebox-database
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: jukebox
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    restart: always
+
+  migrate:
+    container_name: jukebox-migrate
+    build:
+      context: .
+    command: ["python3", "jukebox/database/migrations.py"]
+    environment:
+      DATABASE_URL: postgres://postgres:admin123@database:5432/jukebox
+    volumes:
+      - ./jukebox:/opt/jukebox
+    depends_on:
+      - database
+    links:
+      - database
+
+volumes:
+  pg_data:

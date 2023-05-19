@@ -12,6 +12,7 @@ set -e
 . /pyenv/bin/activate
 
 # You can put other setup logic here
+export PYTHONPATH="${PYTHONPATH}:/opt/"
 
 # Evaluating passed command:
 exec "$@"

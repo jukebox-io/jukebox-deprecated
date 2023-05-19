@@ -1,7 +1,7 @@
 <component name="CopyrightManager">
-  <settings default="Standard">
+  <settings>
     <module2copyright>
-      <element module="All" copyright="Standard" />
+      <element module="Project Files" copyright="JukeBox Copyright" />
     </module2copyright>
   </settings>
 </component>

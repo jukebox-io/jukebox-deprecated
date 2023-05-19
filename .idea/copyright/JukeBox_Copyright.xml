@@ -1,6 +1,6 @@
 <component name="CopyrightManager">
   <copyright>
     <option name="notice" value="Copyright (c) &amp;#36;originalComment.match(&quot;Copyright \(c\) (\d+)&quot;, 1, &quot;-&quot;, &quot;&amp;#36;today.year&quot;)&amp;#36;today.year JukeBox Developers - All Rights Reserved&#10;This file is part of the JukeBox Music App and is released under the &quot;MIT License Agreement&quot;&#10;Please see the LICENSE file that should have been included as part of this package" />
-    <option name="myName" value="Standard" />
+    <option name="myName" value="JukeBox Copyright" />
   </copyright>
 </component>
