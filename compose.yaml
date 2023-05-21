@@ -2,8 +2,7 @@ version: '3.8'
 
 services:
   webapp:
-    build:
-      context: .
+    image: jukebox
     command: ["uvicorn", "jukebox.main:app", "--host", "0.0.0.0", "--port", "8000"]
     environment:
       DATABASE_URL: postgres://postgres:admin123@database:5432/jukebox
@@ -31,8 +30,7 @@ services:
     restart: on-failure
 
   scheduler:
-    build:
-      context: .
+    image: jukebox
     command: [ "python", "jukebox/scheduler.py" ]
     environment:
       DATABASE_URL: postgres://postgres:admin123@database:5432/jukebox
@@ -46,8 +44,7 @@ services:
     restart: on-failure
 
   migrate:
-    build:
-      context: .
+    image: jukebox
     command: ["python", "jukebox/database/migrations.py"]
     environment:
       DATABASE_URL: postgres://postgres:admin123@database:5432/jukebox
