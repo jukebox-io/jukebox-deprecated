@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   webapp:
-    container_name: jukebox-webapp
     build:
       context: .
     command: ["uvicorn", "jukebox.main:app", "--host", "0.0.0.0", "--port", "8000"]
@@ -10,30 +9,46 @@ services:
       DATABASE_URL: postgres://postgres:admin123@database:5432/jukebox
     volumes:
       - ./jukebox:/opt/jukebox
-    ports:
-      - "8000:8000"
     depends_on:
       - migrate
       - database
     links:
       - database
-    restart: always
+    restart: on-failure
+    deploy:
+      replicas: 4
 
-  database:
-    container_name: jukebox-database
-    image: postgres
-    environment:
-      POSTGRES_PASSWORD: admin123
-      POSTGRES_DB: jukebox
+  nginx:
+    image: nginx
     volumes:
-      - pg_data:/var/lib/postgresql/data
-    restart: always
+      - ./misc/nginx/compose.conf:/etc/nginx/conf.d/compose.conf
+    ports:
+      - "8000:8000"
+    depends_on:
+      - webapp
+    links:
+      - webapp
+    restart: on-failure
 
-  migrate:
-    container_name: jukebox-migrate
+  scheduler:
     build:
       context: .
-    command: ["python3", "jukebox/database/migrations.py"]
+    command: [ "python", "jukebox/scheduler.py" ]
+    environment:
+      DATABASE_URL: postgres://postgres:admin123@database:5432/jukebox
+    volumes:
+      - ./jukebox:/opt/jukebox
+    depends_on:
+      - database
+      - webapp
+    links:
+      - database
+    restart: on-failure
+
+  migrate:
+    build:
+      context: .
+    command: ["python", "jukebox/database/migrations.py"]
     environment:
       DATABASE_URL: postgres://postgres:admin123@database:5432/jukebox
     volumes:
@@ -42,6 +57,15 @@ services:
       - database
     links:
       - database
+
+  database:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: jukebox
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    restart: always
 
 volumes:
   pg_data:
