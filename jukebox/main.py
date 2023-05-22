@@ -5,8 +5,10 @@
 import os
 
 from fastapi import FastAPI
+from starlette.middleware.authentication import AuthenticationMiddleware
 
 from jukebox import globals
+from jukebox.auth.backend import JWTAuthBackend
 from jukebox.database.core import init_db, close_db
 from jukebox.utils import AccessLoggerMiddleware, get_logger
 
@@ -20,6 +22,7 @@ app = FastAPI(
 )
 
 app.add_middleware(AccessLoggerMiddleware)
+app.add_middleware(AuthenticationMiddleware, backend=JWTAuthBackend())
 
 
 @app.on_event('startup')
