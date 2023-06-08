@@ -114,7 +114,7 @@ def perform_migrations(develop: bool = False) -> None:
             logger.info("Successfully re-applied last migration to database")
 
         else:
-            # Invalid Operation
+            # No migration needed
             logger.info('Database up-to-date, no migration needed')
 
 
