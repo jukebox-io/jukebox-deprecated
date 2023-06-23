@@ -29,7 +29,7 @@ def make_migration(title: str = None, scriptable: bool = False) -> None:
 
 if __name__ == '__main__':
     # Prompt for input
-    title_input: str = input("Title: ")
+    title_input: str = input("Enter a suitable title for your migration: ")
 
     # Create a new migration script
     make_migration(title_input)

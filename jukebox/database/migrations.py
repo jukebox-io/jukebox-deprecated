@@ -9,7 +9,7 @@ from functools import cache
 import yoyo
 from tabulate import tabulate
 from yoyo.backends import DatabaseBackend
-from yoyo.migrations import MigrationList, PostApplyHookMigration, topological_sort, Migration
+from yoyo.migrations import MigrationList, PostApplyHookMigration, topological_sort
 
 from jukebox import utils
 from jukebox.database.core import db_uri

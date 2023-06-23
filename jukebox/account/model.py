@@ -2,11 +2,13 @@
 #  This file is part of the JukeBox Music App and is released under the "MIT License Agreement"
 #  Please see the LICENSE file that should have been included as part of this package
 
-from starlette.authentication import AuthenticationBackend
-from starlette.requests import HTTPConnection
+from pydantic import EmailStr, Json
+
+from jukebox.core.model import Model
 
 
-class JWTAuthBackend(AuthenticationBackend):
-    async def authenticate(self, conn: HTTPConnection):
-        conn.headers
-        return
+class Account(Model):
+    uid: str
+    name: str
+    email: EmailStr
+    active: bool

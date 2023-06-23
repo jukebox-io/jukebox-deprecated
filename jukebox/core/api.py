@@ -2,11 +2,8 @@
 #  This file is part of the JukeBox Music App and is released under the "MIT License Agreement"
 #  Please see the LICENSE file that should have been included as part of this package
 
-from starlette.authentication import AuthenticationBackend
-from starlette.requests import HTTPConnection
+from fastapi import APIRouter
 
-
-class JWTAuthBackend(AuthenticationBackend):
-    async def authenticate(self, conn: HTTPConnection):
-        conn.headers
-        return
+router = APIRouter(
+    prefix="/api/v1",
+)
