@@ -13,3 +13,7 @@ loggers:
     level: DEBUG
     handlers: [ console ]
     propagate: no
+#  uvicorn.error:
+#    level: ERROR
+#    handlers: [ console ]
+#    propagate: no

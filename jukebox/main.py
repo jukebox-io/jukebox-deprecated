@@ -9,6 +9,7 @@ from starlette.middleware.authentication import AuthenticationMiddleware
 
 from jukebox import globals
 from jukebox.auth.backend import JWTAuthBackend
+from jukebox.core.api import router
 from jukebox.database.core import init_db, close_db
 from jukebox.utils import AccessLoggerMiddleware, get_logger
 
@@ -17,13 +18,16 @@ logger = get_logger()
 app = FastAPI(
     title="JukeBox Music App",
     version=globals.version,
-    docs_url='/docs',
-    redoc_url=None,  # disable
+    docs_url='/docs', redoc_url=None,  # disable
 )
+
+# Middlewares
 
 app.add_middleware(AccessLoggerMiddleware)
 app.add_middleware(AuthenticationMiddleware, backend=JWTAuthBackend())
 
+
+# Hooks
 
 @app.on_event('startup')
 async def startup():
@@ -35,3 +39,7 @@ async def startup():
 async def shutdown():
     logger.debug("Stopping worker with pid: %d", os.getpid())
     await close_db()
+
+
+# Mounts
+app.include_router(router)

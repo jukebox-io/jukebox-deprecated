@@ -8,6 +8,7 @@ from urllib.parse import quote
 
 import yaml
 from fastapi import FastAPI, Request, Response
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 from starlette.types import Scope
 
@@ -30,40 +31,51 @@ def get_logger(scope: str = 'default'):
     return logging.getLogger(f'jukebox.{scope}')
 
 
+def get_client_addr(scope: Scope) -> str:
+    client = scope.get("client")
+    if not client:
+        return ""
+    return "%s:%d" % client
+
+
+def get_path_with_query_string(scope: Scope) -> str:
+    path_with_query_string = quote(scope["path"])
+    if scope["query_string"]:
+        path_with_query_string = "{}?{}".format(
+            path_with_query_string, scope["query_string"].decode("ascii")
+        )
+    return path_with_query_string
+
+
 class AccessLoggerMiddleware(BaseHTTPMiddleware):
     def __init__(self, app: FastAPI):
         super().__init__(app)
         self.logger = get_logger('access')
 
-    async def dispatch(
-            self, request: Request, call_next: RequestResponseEndpoint
-    ) -> Response:
-        response = await call_next(request)
-        await self.log_access(request, response)
-        return response
+    async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
+        msg: str = '[ %(state)5s ] %(address)s - "%(method)s %(path)s HTTP/%(version)s" %(status_code)s'
+        details: dict = {
+            'address': get_client_addr(request.scope) or 'anonymous',
+            'method': request.method,
+            'path': get_path_with_query_string(scope=request.scope),
+            'version': request.get('http_version') or 'nil',
+        }
 
-    async def log_access(self, request: Request, response: Response) -> None:
-        self.logger.info(
-            '%s - "%s %s HTTP/%s" %d',
-            self.get_client_addr(request.scope) or 'unknown',
-            request.method,
-            self.get_path_with_query_string(request.scope),
-            request.get('http_version'),
-            response.status_code
-        )
+        # log the request
+        self.logger.info(msg, {**details, 'state': 'BEGIN', 'status_code': ''})
 
-    @classmethod
-    def get_client_addr(cls, scope: Scope) -> str:
-        client = scope.get("client")
-        if not client:
-            return ""
-        return "%s:%d" % client
+        # perform the operation and log the response
+        try:
+            response: Response = await call_next(request)
 
-    @classmethod
-    def get_path_with_query_string(cls, scope: Scope) -> str:
-        path_with_query_string = quote(scope["path"])
-        if scope["query_string"]:
-            path_with_query_string = "{}?{}".format(
-                path_with_query_string, scope["query_string"].decode("ascii")
-            )
-        return path_with_query_string
+            self.logger.info(msg, {**details, 'state': 'END', 'status_code': response.status_code})
+            return response
+
+        except BaseException as exc_info:
+            # log the exception
+            status_code: int = 500
+            if isinstance(exc_info, StarletteHTTPException):
+                status_code = exc_info.status_code
+
+            self.logger.error(msg, {**details, 'state': 'END', 'status_code': status_code}, exc_info=exc_info)
+            raise exc_info      # re-raise exception
