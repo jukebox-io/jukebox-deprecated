@@ -1,6 +1,7 @@
 #  Copyright (c) 2023 JukeBox Developers - All Rights Reserved
 #  This file is part of the JukeBox Music App and is released under the "MIT License Agreement"
 #  Please see the LICENSE file that should have been included as part of this package
+
 import itertools
 import os
 import textwrap
@@ -11,16 +12,19 @@ from tabulate import tabulate
 from yoyo.backends import DatabaseBackend
 from yoyo.migrations import MigrationList, PostApplyHookMigration, topological_sort
 
-from jukebox import utils
 from jukebox.database.core import db_uri
-from jukebox.globals import root
+from jukebox.globals import project_root
+from jukebox.logger import get_logger
 
-logger = utils.get_logger('migration')
-source: str = str(root / 'jukebox/database/revisions')
+logger = get_logger('migration')
+source: str = str(project_root / 'jukebox/database/revisions')
 
 
 @cache
-def get_backend() -> DatabaseBackend:
+def create_db_manager() -> DatabaseBackend:
+    """
+    Create a new database manager and caches it.
+    """
     logger.info('Using database: %s', db_uri.obscure_password)
     return yoyo.get_backend(
         uri=str(db_uri),  # Accepts only string value
@@ -29,7 +33,10 @@ def get_backend() -> DatabaseBackend:
 
 
 @cache
-def get_migrations() -> MigrationList:
+def read_migrations() -> MigrationList:
+    """
+    Reads all migration scripts and returns the list of migrations.
+    """
     migrations = yoyo.read_migrations(source)
 
     if len(migrations) > 0:
@@ -41,14 +48,17 @@ def get_migrations() -> MigrationList:
 
 
 def list_migrations() -> None:
-    backend: DatabaseBackend = get_backend()
-    migrations: MigrationList = get_migrations()
+    """
+    List all migrations
+    """
+    db_manager: DatabaseBackend = create_db_manager()
+    migrations: MigrationList = read_migrations()
 
     headers: list = ["Version", "Description", "Type", "State"]
     table: list = []
 
-    with backend.lock():
-        history: list = backend.get_applied_migration_hashes()
+    with db_manager.lock():
+        history: list = db_manager.get_applied_migration_hashes()
 
         all_migrations = topological_sort(migrations)
         if migrations.post_apply:
@@ -71,8 +81,15 @@ def list_migrations() -> None:
 
 
 def perform_migrations(develop: bool = False) -> None:
-    backend: DatabaseBackend = get_backend()
-    migrations: MigrationList = get_migrations()
+    """
+    Apply all pending migrations to the database. If no pending migrations found and is in development mode,
+    it reapplies the last applied migration.
+
+    Args:
+        develop (bool): Whether to run the migrations in development mode (default: False)
+    """
+    db_manager: DatabaseBackend = create_db_manager()
+    migrations: MigrationList = read_migrations()
 
     if not migrations:
         return
@@ -81,22 +98,22 @@ def perform_migrations(develop: bool = False) -> None:
     list_migrations()
 
     # Perform migrations
-    with backend.lock():
-        unapplied: MigrationList = backend.to_apply(migrations)
+    with db_manager.lock():
+        unapplied: MigrationList = db_manager.to_apply(migrations)
 
         def apply_migrations(revisions: MigrationList) -> None:
             for revision in revisions:
                 logger.debug("Migrating database to version '%s'", revision.id)
-                backend.apply_one(revision)
+                db_manager.apply_one(revision)
 
             for revision in revisions.post_apply:
                 logger.debug("Running post-apply script '%s'", revision.id)
-                backend.apply_one(revision, mark=False)
+                db_manager.apply_one(revision, mark=False)
 
         def rollback_revisions(revisions: MigrationList) -> None:
             for revision in revisions:
                 logger.debug("Rolling back database from version '%s'", revision.id)
-                backend.rollback_one(revision)
+                db_manager.rollback_one(revision)
 
         if len(unapplied) > 0:
             # Apply any pending migrations
@@ -107,9 +124,9 @@ def perform_migrations(develop: bool = False) -> None:
         elif develop:
             # Re-apply last migration
             logger.info("Re-applying last migration to database")
-            last_migration = backend.to_rollback(migrations)[:1]
+            last_migration = db_manager.to_rollback(migrations)[:1]
             rollback_revisions(last_migration)
-            unapplied: MigrationList = backend.to_apply(migrations)
+            unapplied: MigrationList = db_manager.to_apply(migrations)
             apply_migrations(unapplied)
             logger.info("Successfully re-applied last migration to database")
 

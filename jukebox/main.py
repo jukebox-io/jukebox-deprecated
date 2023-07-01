@@ -10,8 +10,8 @@ from starlette.middleware.authentication import AuthenticationMiddleware
 from jukebox import globals
 from jukebox.auth.backend import JWTAuthBackend
 from jukebox.core.api import router
-from jukebox.database.core import init_db, close_db
-from jukebox.utils import AccessLoggerMiddleware, get_logger
+from jukebox.database.core import init_db_conn, close_db_conn
+from jukebox.logger import get_logger, AccessLoggerMiddleware
 
 logger = get_logger()
 
@@ -32,13 +32,13 @@ app.add_middleware(AuthenticationMiddleware, backend=JWTAuthBackend())
 @app.on_event('startup')
 async def startup():
     logger.debug("Booting worker with pid: %d", os.getpid())
-    await init_db()
+    await init_db_conn()
 
 
 @app.on_event('shutdown')
 async def shutdown():
     logger.debug("Stopping worker with pid: %d", os.getpid())
-    await close_db()
+    await close_db_conn()
 
 
 # Mounts

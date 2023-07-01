@@ -5,13 +5,13 @@
 import shlex
 import subprocess
 
-from jukebox import utils
-from jukebox.globals import root
+from jukebox.globals import project_root
+from jukebox.logger import get_logger
 
 DEFAULT_OPTS = ["--no-config-file", "--batch"]
 
-logger = utils.get_logger('migration')
-source: str = str(root / 'jukebox/database/revisions')
+logger = get_logger('migration')
+source: str = str(project_root / 'jukebox/database/revisions')
 
 
 def make_migration(title: str = None, scriptable: bool = False) -> None:

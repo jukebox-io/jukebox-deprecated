@@ -7,7 +7,7 @@ import pathlib
 import starlette.config
 
 version: str = "0.2.1"
-root: pathlib.Path = pathlib.Path(__file__).parents[1]
+project_root: pathlib.Path = pathlib.Path(__file__).parents[1]
 
 # Configuration
 
@@ -16,4 +16,4 @@ root: pathlib.Path = pathlib.Path(__file__).parents[1]
 #   2. development.conf (if available, sets development defaults for required configurations)
 #   3. Default value (some of the configuration is optional and will be assigned default value automatically)
 
-settings = starlette.config.Config(root / "misc/development.conf")
+global_settings = starlette.config.Config(project_root / "misc/development.conf")

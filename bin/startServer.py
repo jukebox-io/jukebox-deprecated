@@ -12,9 +12,9 @@ from typing import Callable
 import uvicorn
 import watchfiles
 
-from jukebox.globals import root
+from jukebox.globals import project_root
+from jukebox.logger import get_logger, default_log_config
 from jukebox.scheduler import run_scheduler
-from jukebox.utils import get_logger, logging_config
 
 logger = get_logger()
 
@@ -23,7 +23,7 @@ run_config: dict = {
     'host': 'localhost',
     'port': 8000,
     'workers': 4,
-    'log_config': logging_config,
+    'log_config': default_log_config,
 }
 
 multiprocessing.allow_connection_pickling()
@@ -33,13 +33,23 @@ processes: list[spawn.Process] = []
 
 
 def start_process(config: uvicorn.Config, target: Callable, *args: list, **kwargs: dict) -> spawn.Process:
+    """
+    Start a new process and returns its instance.
+
+    Args:
+        config: Uvicorn configuration object.
+        target: Target to start the process.
+
+    Returns:
+        spawn.Process: The new process instance.
+    """
     try:
         stdin_fno = sys.stdin.fileno()
     except OSError:
         stdin_fno = None
 
     process = spawn.Process(
-        target=child,
+        target=_child_process,
         kwargs={
             "config": config,
             "target": target,
@@ -52,7 +62,7 @@ def start_process(config: uvicorn.Config, target: Callable, *args: list, **kwarg
     return process
 
 
-def child(config: uvicorn.Config, target: Callable, args: list, kwargs: dict, stdin_fno: int = None) -> None:
+def _child_process(config: uvicorn.Config, target: Callable, args: list, kwargs: dict, stdin_fno: int = None) -> None:
     # Re-open stdin.
     if stdin_fno is not None:
         sys.stdin = os.fdopen(stdin_fno)
@@ -64,20 +74,30 @@ def child(config: uvicorn.Config, target: Callable, args: list, kwargs: dict, st
     target(*args, **kwargs)
 
 
-def prettify_changes(changes) -> str:
+def prettify_changes(changes: set[tuple[watchfiles.Change, str]]) -> str:
+    """
+    Utility function to pretty-print watch file changes.
+
+    Args:
+        changes: The list of changes to be pretty-printed.
+
+    Returns:
+        str: The pretty-printed changes as a string.
+    """
+
     paths: list[str] = []
 
     for change in changes:
         path = pathlib.Path(change[1])
         try:
-            paths.append(f"'{path.relative_to(root)}'")
+            paths.append(f"'{path.relative_to(project_root)}'")
         except ValueError:
             paths.append(f"'{path}'")
 
     return ', '.join(paths)
 
 
-def main():
+def start_server() -> None:
     logger.info("Starting development server at http://%s:%d/", run_config['host'], run_config['port'])
     logger.info("Quit the server with CONTROL-C.")
 
@@ -86,7 +106,7 @@ def main():
     worker = uvicorn.Server(config)
 
     watcher = watchfiles.watch(
-        root / 'jukebox',
+        project_root / 'jukebox',
         watch_filter=watchfiles.PythonFilter(
             extra_extensions=['.yml', '.yaml'],
         ),
@@ -116,4 +136,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    start_server()

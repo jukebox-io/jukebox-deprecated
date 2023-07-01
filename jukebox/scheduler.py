@@ -7,7 +7,7 @@ import os
 import psutil
 from rocketry import Rocketry
 
-from jukebox.utils import get_logger
+from jukebox.logger import get_logger
 
 logger = get_logger('scheduler')
 
@@ -21,6 +21,9 @@ async def example_task():
 
 
 def run_scheduler() -> None:
+    """
+    Runs the job scheduler in the current thread.
+    """
     logger.debug("Booting scheduler with pid: %d", os.getpid())
     try:
         scheduler.run()

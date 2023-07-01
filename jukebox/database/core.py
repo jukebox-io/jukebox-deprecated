@@ -4,16 +4,18 @@
 
 from databases import Database, DatabaseURL
 
-from jukebox.globals import settings
+from jukebox.globals import global_settings
 
-db_uri: DatabaseURL = settings.get('DATABASE_URL', cast=DatabaseURL)
+db_uri: DatabaseURL = global_settings.get('DATABASE_URL', cast=DatabaseURL)
 
 database = Database(db_uri)
 
 
-async def init_db() -> None:
+async def init_db_conn() -> None:
+    """Initialize the database connection"""
     await database.connect()
 
 
-async def close_db() -> None:
+async def close_db_conn() -> None:
+    """Close the database connection"""
     await database.disconnect()
