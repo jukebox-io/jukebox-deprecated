@@ -8,11 +8,11 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 
-fastapi = "^0.99.0"
+fastapi = { version="^0.100.0b3", allow-prereleases = true }
 uvicorn = "^0.22.0"
-pydantic = { extras = ["email"], version = "^1.10.10" }
+pydantic = { version = "^2.0.2", extras = ["email"] }
 rocketry = "^2.5.1"
-databases = { extras = ["asyncpg"], version = "^0.7.0" }
+databases = { version = "^0.7.0", extras = ["asyncpg"] }
 yoyo-migrations = "^8.2.0"
 psycopg2-binary = "^2.9.6"
 psutil = "^5.9.5"
