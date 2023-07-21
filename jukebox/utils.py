@@ -2,7 +2,9 @@
 #  This file is part of the JukeBox Music App and is released under the "MIT License Agreement"
 #  Please see the LICENSE file that should have been included as part of this package
 
-from urllib.parse import quote
+import random
+import string
+from urllib.parse import quote, urlparse
 
 from starlette.types import Scope
 
@@ -42,3 +44,36 @@ def extract_path_with_query_string(scope: Scope) -> str:
             path_with_query_string, scope["query_string"].decode("ascii")
         )
     return path_with_query_string
+
+
+def obscure_password(url: str) -> str:
+    """
+    Replace the password in a given url with ****.
+
+    Args:
+        url (str): The given url to replace the password.
+
+    Returns:
+        str: The url after the password was replaced.
+    """
+    url_parts = urlparse(url)
+    netloc = url_parts.netloc
+
+    if '@' in netloc:
+        auth, host = netloc.rsplit('@', 1)
+        if ':' in auth:
+            user, _ = auth.split(':', 1)
+            auth = "{user}:{password}".format(user=user, password='*****')
+        netloc = f"{auth}@{host}".format(auth=auth, host=host)
+
+    return url_parts._replace(netloc=netloc).geturl()
+
+
+def get_random_string(length: int = 10, population: str = None):
+    """
+    Return a random string of ``length`` characters
+    """
+    if not population:
+        population = string.ascii_letters + string.digits  # use alphanumeric by default
+
+    return "".join(random.choices(population=population, k=length))

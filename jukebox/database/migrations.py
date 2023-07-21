@@ -1,13 +1,15 @@
 #  Copyright (c) 2023 JukeBox Developers - All Rights Reserved
 #  This file is part of the JukeBox Music App and is released under the "MIT License Agreement"
 #  Please see the LICENSE file that should have been included as part of this package
-
+import glob
 import itertools
 import os
 import textwrap
+from datetime import date
 from functools import cache
 
 import yoyo
+from slugify import slugify
 from tabulate import tabulate
 from yoyo.backends import DatabaseBackend
 from yoyo.migrations import MigrationList, PostApplyHookMigration, topological_sort
@@ -15,9 +17,26 @@ from yoyo.migrations import MigrationList, PostApplyHookMigration, topological_s
 from jukebox.database.core import db_uri
 from jukebox.globals import project_root
 from jukebox.logger import get_logger
+from jukebox.utils import obscure_password, get_random_string
 
 logger = get_logger('migration')
 source: str = str(project_root / 'jukebox/database/revisions')
+
+MIGRATION_TEMPLATE: str = textwrap.dedent(
+    '''\
+    """
+    {description}
+    """
+    
+    
+    class Forward:
+        ...
+    
+    
+    class Backward:
+        ...
+    '''
+)
 
 
 @cache
@@ -25,9 +44,9 @@ def create_db_manager() -> DatabaseBackend:
     """
     Create a new database manager and caches it.
     """
-    logger.info('Using database: %s', db_uri.obscure_password)
+    logger.info('Using database: %s', obscure_password(db_uri))
     return yoyo.get_backend(
-        uri=str(db_uri),  # Accepts only string value
+        uri=db_uri,
         migration_table='schema_version'
     )
 
@@ -133,6 +152,53 @@ def perform_migrations(develop: bool = False) -> None:
         else:
             # No migration needed
             logger.info('Database up-to-date, no migration needed')
+
+
+# ----------------------------------------------------------------
+# Generate New Migration Script
+# ----------------------------------------------------------------
+
+def new_migration(message: str) -> None:
+    """
+    Creates a new migration script with the given message.
+
+    Args:
+        message (str): The given message denoting the migration script.
+    """
+    if not message:
+        raise ValueError('Message for migration can not be empty')
+
+    file_name: str = _make_filename(message)
+    full_path: str = os.path.join(source, file_name)
+    content: str = MIGRATION_TEMPLATE.format(message=message)
+
+    with open(full_path, 'w', encoding='UTF-8') as f:
+        f.write(content)
+        print(f"Created file {os.path.relpath(full_path, project_root)}")
+
+
+def _make_filename(message: str) -> str:
+    message = message.strip().split('\n', 1)[0]  # get first line
+    message = message.strip()  # strip extra whitespace
+
+    if message:
+        slug = "-" + slugify(message)
+    else:
+        slug = ""
+
+    date_str = date.today().strftime("%Y%m%d")
+    number = "01"
+    rand = get_random_string(5)
+
+    for path in glob.glob(os.path.join(source, date_str + "_*")):
+        try:
+            fn_parts = os.path.basename(path).split('_', 2)
+            if len(fn_parts) > 1 and number <= fn_parts[1]:  # lexicographical comparison
+                number = str(int(fn_parts[1]) + 1).zfill(2)
+        except ValueError:
+            ...
+
+    return os.path.join(source, f"{date_str}_{number}_{rand}{slug}.py")
 
 
 if __name__ == '__main__':
