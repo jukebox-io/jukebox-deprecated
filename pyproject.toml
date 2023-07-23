@@ -11,7 +11,7 @@ python = "^3.11"
 fastapi = "^0.100.0"
 uvicorn = "^0.23.1"
 rocketry = "^2.5.1"
-pydantic = "^1.10.11"   # don't update to v2 until all dependents are updated properly
+pydantic = "^2.0.3"
 email-validator = "^2.0.0.post2"
 databases = { version = "^0.7.0", extras = ["asyncpg"] }
 yoyo-migrations = "^8.2.0"
