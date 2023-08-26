@@ -1,0 +1,23 @@
+version: 1
+disable_existing_loggers: true
+
+formatters:
+    standard:
+        format: '%(asctime)s %(name)s [%(process)d] %(threadName)s: %(levelname)s - %(message)s'
+
+handlers:
+    console:
+        class: logging.StreamHandler
+        formatter: standard
+        stream: ext://sys.stdout
+
+loggers:
+    jukebox:
+        level: DEBUG
+        handlers: [ console ]
+        propagate: no
+
+#    uvicorn.error:
+#        level: ERROR
+#        handlers: [ console ]
+#        propagate: no

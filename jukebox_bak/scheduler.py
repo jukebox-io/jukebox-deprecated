@@ -5,9 +5,8 @@
 import os
 
 import psutil
-from rocketry import Rocketry
-
 from jukebox.logger import get_logger
+from rocketry import Rocketry
 
 logger = get_logger('scheduler')
 
